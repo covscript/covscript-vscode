@@ -47,6 +47,7 @@
 		"prefix": "namespace",
 		"body": [
 			"namespace ${1:NameSpaceName}",
+			"\t$0",
 			"end"
 		]
     },

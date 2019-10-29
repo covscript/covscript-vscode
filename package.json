@@ -40,7 +40,7 @@
         "grammars": [{
             "language": "covscript",
             "scopeName": "source.covscript",
-            "path": "./syntaxes/covscript.tmLanguage.json"
+            "path": "./syntaxes/covscript.cson.json"
         }]
     }
 }

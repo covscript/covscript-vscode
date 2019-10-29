@@ -1,0 +1,1230 @@
+{
+	"version": "0.0.1",
+	"name": "CovScript",
+	"scopeName": "source.covscript",
+	"fileTypes": [
+		"csbuild.config",
+		"csc",
+		"csp"
+	],
+	"firstLineMatch": "^#!\\s*/.*(?:covscript|cs)\\b",
+	"patterns": [
+		{
+			"captures": {
+				"1": {
+					"name": "keyword.control.class.covscript"
+				},
+				"2": {
+					"name": "entity.name.type.class.covscript"
+				},
+				"4": {
+					"name": "entity.other.inherited-class.covscript"
+				},
+				"5": {
+					"name": "punctuation.separator.inheritance.covscript"
+				},
+				"6": {
+					"name": "variable.other.object.covscript"
+				},
+				"7": {
+					"name": "punctuation.definition.variable.covscript"
+				}
+			},
+			"match": "(?x)\n^\\s*(class|struct)\\s+\n(\n  (\n    [.a-zA-Z0-9_:]+\n    (\\s*(<)\\s*[.a-zA-Z0-9_:]+)?   # class A < B\n  )\n  |\n  ((<<)\\s*[.a-zA-Z0-9_:]+)         # class << C\n)",
+			"name": "meta.class.covscript"
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "keyword.control.package.covscript"
+				},
+				"2": {
+					"name": "entity.name.type.package.covscript"
+				},
+				"3": {
+					"name": "entity.other.inherited-class.package.first.covscript"
+				},
+				"4": {
+					"name": "punctuation.separator.inheritance.covscript"
+				},
+				"5": {
+					"name": "entity.other.inherited-class.package.second.covscript"
+				},
+				"6": {
+					"name": "punctuation.separator.inheritance.covscript"
+				},
+				"7": {
+					"name": "entity.other.inherited-class.package.third.covscript"
+				},
+				"8": {
+					"name": "punctuation.separator.inheritance.covscript"
+				}
+			},
+			"match": "(?x)\n^\\s*(package)\\s+\n(\n  ([A-Z]\\w*(::))?\n  ([A-Z]\\w*(::))?\n  ([A-Z]\\w*(::))*\n  [A-Z]\\w*\n)",
+			"name": "meta.package.covscript"
+		},
+		{
+			"comment": "else if is a common mistake carried over from other languages. it works if you put in a second end, but it’s never what you want.",
+			"match": "(?<!\\.)\\belse(\\s)+if\\b",
+			"name": "invalid.deprecated.covscript"
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.constant.hashkey.covscript"
+				}
+			},
+			"comment": "symbols as hash key (1.9 syntax)",
+			"match": "(?>[a-zA-Z_]\\w*(?>[?!])?)(:)(?!:)",
+			"name": "constant.language.symbol.hashkey.covscript"
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.constant.covscript"
+				}
+			},
+			"comment": "symbols as hash key (1.8 syntax)",
+			"match": "(?<!:)(:)(?>[a-zA-Z_]\\w*(?>[?!])?)(?=\\s*=>)",
+			"name": "constant.language.symbol.hashkey.covscript"
+		},
+		{
+			"comment": "everything being a reserved word, not a value and needing a 'end' is a..",
+			"match": "(?<!\\.)\\b(switch|case|class|function|struct|namespace|else|end|for|foreach|if|package|loop|until|while)\\b(?![?!])",
+			"name": "keyword.control.covscript"
+		},
+		{
+			"comment": "contextual smart pair support for block parameters",
+			"match": "(?<!\\.)\\bdo\\b",
+			"name": "keyword.control.start-block.covscript"
+		},
+		{
+			"comment": "contextual smart pair support",
+			"match": "(?<={)(\\s+)",
+			"name": "meta.syntax.covscript.start-block"
+		},
+		{
+			"match": "(?<!\\.)\\b(break|contiune|return|this)\\b(?![?!])|\\bdefined\\?|\\b(block_given|iterator)\\?",
+			"name": "keyword.control.pseudo-method.covscript"
+		},
+		{
+			"match": "\\bnull\\b(?![?!])",
+			"name": "constant.language.null.covscript"
+		},
+		{
+			"match": "\\b(true|false)\\b(?![?!])",
+			"name": "constant.language.boolean.covscript"
+		},
+		{
+			"match": "\\bthis\\b(?![?!])",
+			"name": "variable.language.this.covscript"
+		},
+		{
+			"comment": " everything being a method but having a special function is a..",
+			"match": "\\b(initialize|equal|duplicate|new|gcnew|extend|using)\\b(?![?!])",
+			"name": "keyword.other.special-method.covscript"
+		},
+		{
+			"begin": "\\b(?<!\\.|::)(import|runtime\\.import|runtime\\.source_import)\\b(?![?!])",
+			"captures": {
+				"1": {
+					"name": "keyword.other.special-method.covscript"
+				}
+			},
+			"end": "$|(?=#|})",
+			"name": "meta.import.covscript",
+			"patterns": [
+				{
+					"include": "$this"
+				}
+			]
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.variable.covscript"
+				}
+			},
+			"match": "(@)[a-zA-Z_]\\w*",
+			"name": "variable.other.readwrite.instance.covscript"
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.variable.covscript"
+				}
+			},
+			"match": "(@@)[a-zA-Z_]\\w*",
+			"name": "variable.other.readwrite.class.covscript"
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.variable.covscript"
+				}
+			},
+			"match": "(\\$)[a-zA-Z_]\\w*",
+			"name": "variable.other.readwrite.global.covscript"
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.variable.covscript"
+				}
+			},
+			"match": "(\\$)(!|@|&|`|'|\\+|\\d+|~|=|/|\\\\|,|;|\\.|<|>|_|\\*|\\$|\\?|:|\"|-[0adFiIlpv])",
+			"name": "variable.other.readwrite.global.pre-defined.covscript"
+		},
+		{
+			"match": "\\b[A-Z]\\w*(?=((\\.|::)[A-Za-z]|\\[))",
+			"name": "support.class.covscript"
+		},
+		{
+			"match": "\\b[_A-Z]\\w*\\b",
+			"name": "variable.other.constant.covscript"
+		},
+		{
+			"begin": "(?x)\n(?=function\\b)                          # optimization to help Oniguruma fail fast\n(?<=^|\\s)(function)\\s+\n(\n  (?>[a-zA-Z_]\\w*(?>\\.|::))?      # method prefix\n  (?>                               # method name\n    [a-zA-Z_]\\w*(?>[?!]|=(?!>))?\n    |\n    ===?|!=|>[>=]?|<=>|<[<=]?|[%&`/\\|]|\\*\\*?|=?~|[-+]@?|\\[]=?\n  )\n)\n\\s*(\\()",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.function.covscript"
+				},
+				"2": {
+					"name": "entity.name.function.covscript"
+				},
+				"3": {
+					"name": "punctuation.definition.parameters.covscript"
+				}
+			},
+			"comment": "The method pattern comes from the symbol pattern. See there for an explanation.",
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.parameters.covscript"
+				}
+			},
+			"name": "meta.function.method.with-arguments.covscript",
+			"patterns": [
+				{
+					"begin": "(?![\\s,)])",
+					"end": "(?=,|\\)\\s*$)",
+					"patterns": [
+						{
+							"captures": {
+								"1": {
+									"name": "storage.type.variable.covscript"
+								},
+								"2": {
+									"name": "constant.language.symbol.hashkey.parameter.function.covscript"
+								},
+								"3": {
+									"name": "punctuation.definition.constant.hashkey.covscript"
+								},
+								"4": {
+									"name": "variable.parameter.function.covscript"
+								}
+							},
+							"match": "\\G([&*]?)(?:([_a-zA-Z]\\w*(:))|([_a-zA-Z]\\w*))"
+						},
+						{
+							"include": "$this"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?x)\n(?=function\\b)                          # optimization to help Oniguruma fail fast\n(?<=^|\\s)(function)\\s+\n(\n  (?>[a-zA-Z_]\\w*(?>\\.|::))?      # method prefix\n  (?>                               # method name\n    [a-zA-Z_]\\w*(?>[?!]|=(?!>))?\n    |\n    ===?|!=|>[>=]?|<=>|<[<=]?|[%&`/\\|]|\\*\\*?|=?~|[-+]@?|\\[]=?\n  )\n)\n[ \\t]\n(?=[ \\t]*[^\\s#;])                 # make sure the following is not comment",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.function.covscript"
+				},
+				"2": {
+					"name": "entity.name.function.covscript"
+				}
+			},
+			"comment": "same as the previous rule, but without parentheses around the arguments",
+			"end": "$",
+			"name": "meta.function.method.with-arguments.covscript",
+			"patterns": [
+				{
+					"begin": "(?![\\s,])",
+					"end": "(?=,|$)",
+					"patterns": [
+						{
+							"captures": {
+								"1": {
+									"name": "storage.type.variable.covscript"
+								},
+								"2": {
+									"name": "constant.language.symbol.hashkey.parameter.function.covscript"
+								},
+								"3": {
+									"name": "punctuation.definition.constant.hashkey.covscript"
+								},
+								"4": {
+									"name": "variable.parameter.function.covscript"
+								}
+							},
+							"match": "\\G([&*]?)(?:([_a-zA-Z]\\w*(:))|([_a-zA-Z]\\w*))"
+						},
+						{
+							"include": "$this"
+						}
+					]
+				}
+			]
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "keyword.control.function.covscript"
+				},
+				"3": {
+					"name": "entity.name.function.covscript"
+				}
+			},
+			"comment": " the optional name is just to catch the function also without a method-name",
+			"match": "(?x)\n(?=function\\b)                            # optimization to help Oniguruma fail fast\n(?<=^|\\s)(function)\\b\n(\n  \\s+\n  (\n    (?>[a-zA-Z_]\\w*(?>\\.|::))?      # method prefix\n    (?>                               # method name\n      [a-zA-Z_]\\w*(?>[?!]|=(?!>))?\n      |\n      ===?|!=|>[>=]?|<=>|<[<=]?|[%&`/\\|]|\\*\\*?|=?~|[-+]@?|\\[]=?\n    )\n  )\n)?",
+			"name": "meta.function.method.without-arguments.covscript"
+		},
+		{
+			"match": "(?x)\n\\b\n(\n  [\\d](?>_?\\d)*                             # 100_000\n  (\\.(?![^[:space:][:digit:]])(?>_?\\d)*)?   # fractional part\n  ([eE][-+]?\\d(?>_?\\d)*)?                   # 1.23e-4\n  |\n  0\n  (?:\n    [xX]\\h(?>_?\\h)*|\n    [oO]?[0-7](?>_?[0-7])*|\n    [bB][01](?>_?[01])*|\n    [dD]\\d(?>_?\\d)*\n  )                                           # A base indicator can only be used with an integer\n)\\b",
+			"name": "constant.numeric.covscript"
+		},
+		{
+			"begin": ":'",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.begin.covscript"
+				}
+			},
+			"comment": "symbol literal with '' delimitor",
+			"end": "'",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\['\\\\]",
+					"name": "constant.character.escape.covscript"
+				}
+			]
+		},
+		{
+			"begin": ":\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.symbol.begin.covscript"
+				}
+			},
+			"comment": "symbol literal with \"\" delimitor",
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.symbol.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_covscript"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"comment": "Needs higher precidence than regular expressions.",
+			"match": "(?<!\\()/=",
+			"name": "keyword.operator.assignment.augmented.covscript"
+		},
+		{
+			"begin": "'",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"comment": "string literal with '' delimitor",
+			"end": "'",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.single.covscript",
+			"patterns": [
+				{
+					"match": "\\\\'|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				}
+			]
+		},
+		{
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"comment": "string literal with interpolation and \"\" delimitor",
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.double.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_covscript"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "`",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"comment": "execute string (allows for interpolation)",
+			"end": "`",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_covscript"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "(?x)\n(?<![\\w)])((/))(?![?*+])\n(?=\n  (?:\\\\/|[^/])*+          # Do NOT change the order\n  /[eimnosux]*\\s*\n  (?:\n    [)\\]}#.,?:]|\\|\\||&&|<=>|=>|==|=~|!~|!=|;|$|\n    if|else|elsif|then|do|end|unless|while|until|or|and\n  )\n  |\n  $\n)",
+			"captures": {
+				"1": {
+					"name": "string.regexp.interpolated.covscript"
+				},
+				"2": {
+					"name": "punctuation.section.regexp.covscript"
+				}
+			},
+			"comment": "regular expression literal with interpolation",
+			"contentName": "string.regexp.interpolated.covscript",
+			"end": "((/[eimnosux]*))",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				}
+			]
+		},
+		{
+			"captures": {
+				"1": {
+					"name": "punctuation.definition.constant.covscript"
+				}
+			},
+			"comment": "symbols",
+			"match": "(?x)\n(?<!:)(:)\n(?>\n  [$a-zA-Z_]\\w*(?>[?!]|=(?![>=]))?\n  |\n  ===?|<=>|>[>=]?|<[<=]?|[%&`/\\|]|\\*\\*?|=?~|[-+]@?|\\[]=?\n  |\n  @@?[a-zA-Z_]\\w*\n)",
+			"name": "constant.language.symbol.covscript"
+		},
+		{
+			"include": "#yard"
+		},
+		{
+			"begin": "(^[ \\t]+)?(?=#)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.whitespace.comment.leading.covscript"
+				}
+			},
+			"end": "(?!\\G)",
+			"patterns": [
+				{
+					"begin": "#",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.covscript"
+						}
+					},
+					"end": "\\n",
+					"name": "comment.line.number-sign.covscript"
+				}
+			]
+		},
+		{
+			"comment": "\n\t\t\tmatches questionmark-letters.\n\n\t\t\texamples (1st alternation = hex):\n\t\t\t?\\x1     ?\\x61\n\n\t\t\texamples (2nd alternation = octal):\n\t\t\t?\\0      ?\\07     ?\\017\n\n\t\t\texamples (3rd alternation = escaped):\n\t\t\t?\\n      ?\\b\n\n\t\t\texamples (4th alternation = meta-ctrl):\n\t\t\t?\\C-a    ?\\M-a    ?\\C-\\M-\\C-\\M-a\n\n\t\t\texamples (4th alternation = normal):\n\t\t\t?a       ?A       ?0 \n\t\t\t?*       ?\"       ?( \n\t\t\t?.       ?#\n\t\t\t\n\t\t\t\n\t\t\tthe negative lookbehind prevents against matching\n\t\t\tp(42.tainted?)\n\t\t\t",
+			"match": "(?<!\\w)\\?(\\\\(x\\h{1,2}(?!\\h)\\b|0[0-7]{0,2}(?![0-7])\\b|[^x0MC])|(\\\\[MC]-)+\\w|[^\\s\\\\])",
+			"name": "constant.numeric.covscript"
+		},
+		{
+			"match": "->",
+			"name": "support.function.kernel.covscript"
+		},
+		{
+			"match": "<<=|%=|&{1,2}=|\\*=|\\*\\*=|\\+=|-=|\\|{1,2}=|<<",
+			"name": "keyword.operator.assignment.augmented.covscript"
+		},
+		{
+			"match": "<(?!<|=)|>(?!<|=|>)|<=|>=|==|!=|(?<=[ \\t])\\?",
+			"name": "keyword.operator.comparison.covscript"
+		},
+		{
+			"match": "(?<!\\.)\\b(and|not|or)\\b(?![?!])",
+			"name": "keyword.operator.logical.covscript"
+		},
+		{
+			"match": "(?<=^|[ \\t])!|&&|\\|\\||\\^",
+			"name": "keyword.operator.logical.covscript"
+		},
+		{
+			"comment": "Safe navigation operator",
+			"match": "(&\\.)\\s*(?![A-Z])",
+			"captures": {
+				"1": {
+					"name": "keyword.operator.logical.covscript"
+				}
+			}
+		},
+		{
+			"match": "(%|\\^|\\*|\\+|-|/)",
+			"name": "keyword.operator.arithmetic.covscript"
+		},
+		{
+			"match": "=",
+			"name": "keyword.operator.assignment.covscript"
+		},
+		{
+			"match": ";",
+			"name": "punctuation.separator.statement.covscript"
+		},
+		{
+			"match": ",",
+			"name": "punctuation.separator.object.covscript"
+		},
+		{
+			"comment": "Mark as method separator if double colons not followed by capital letter",
+			"match": "(\\.|::)\\s*(?![A-Z])",
+			"captures": {
+				"1": {
+					"name": "punctuation.separator.method.covscript"
+				}
+			}
+		},
+		{
+			"match": "{",
+			"name": "punctuation.section.scope.begin.covscript"
+		},
+		{
+			"match": "}",
+			"name": "punctuation.section.scope.end.covscript"
+		},
+		{
+			"match": "\\[",
+			"name": "punctuation.section.array.begin.covscript"
+		},
+		{
+			"match": "]",
+			"name": "punctuation.section.array.end.covscript"
+		},
+		{
+			"match": "\\(|\\)",
+			"name": "punctuation.section.function.covscript"
+		},
+		{
+			"begin": "(?=[a-zA-Z0-9_!?]+\\()",
+			"end": "(?<=\\))",
+			"name": "meta.function-call.covscript",
+			"patterns": [
+				{
+					"include": "#nest_function_parens"
+				},
+				{
+					"include": "#known_function_names"
+				},
+				{
+					"match": "([a-zA-Z0-9_!?]+)((?=\\()|([!?]))",
+					"name": "entity.name.function.covscript"
+				},
+				{
+					"include": "$this"
+				}
+			]
+		}
+	],
+	"repository": {
+		"escaped_char": {
+			"match": "\\\\(?:[0-7]{1,3}|x[\\da-fA-F]{1,2}|.)",
+			"name": "constant.character.escape.covscript"
+		},
+		"heredoc": {
+			"begin": "^<<[-~]?\\w+",
+			"end": "$",
+			"patterns": [
+				{
+					"include": "$this"
+				}
+			]
+		},
+		"interpolated_covscript": {
+			"patterns": [
+				{
+					"begin": "@begin",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.section.embedded.begin.covscript"
+						}
+					},
+					"contentName": "source.covscript",
+					"end": "@end",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.section.embedded.end.covscript"
+						}
+					},
+					"name": "meta.embedded.line.covscript",
+					"patterns": [
+						{
+							"include": "#nest_curly_and_self"
+						},
+						{
+							"include": "$this"
+						}
+					]
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.variable.covscript"
+						}
+					},
+					"match": "(#@)[a-zA-Z_]\\w*",
+					"name": "variable.other.readwrite.instance.covscript"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.variable.covscript"
+						}
+					},
+					"match": "(#@@)[a-zA-Z_]\\w*",
+					"name": "variable.other.readwrite.class.covscript"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.variable.covscript"
+						}
+					},
+					"match": "(#\\$)[a-zA-Z_]\\w*",
+					"name": "variable.other.readwrite.global.covscript"
+				}
+			]
+		},
+		"nest_brackets": {
+			"begin": "\\[",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "]",
+			"patterns": [
+				{
+					"include": "#nest_brackets"
+				}
+			]
+		},
+		"nest_brackets_i": {
+			"begin": "\\[",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "]",
+			"patterns": [
+				{
+					"include": "#interpolated_covscript"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_brackets_i"
+				}
+			]
+		},
+		"nest_brackets_r": {
+			"begin": "\\[",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "]",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				},
+				{
+					"include": "#nest_brackets_r"
+				}
+			]
+		},
+		"nest_curly": {
+			"begin": "{",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "}",
+			"patterns": [
+				{
+					"include": "#nest_curly"
+				}
+			]
+		},
+		"nest_curly_and_self": {
+			"patterns": [
+				{
+					"begin": "{",
+					"captures": {
+						"0": {
+							"name": "punctuation.section.scope.covscript"
+						}
+					},
+					"end": "}",
+					"patterns": [
+						{
+							"include": "#nest_curly_and_self"
+						}
+					]
+				},
+				{
+					"include": "$this"
+				}
+			]
+		},
+		"nest_curly_i": {
+			"begin": "{",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "}",
+			"patterns": [
+				{
+					"include": "#interpolated_covscript"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_curly_i"
+				}
+			]
+		},
+		"nest_curly_r": {
+			"begin": "{",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "}",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				},
+				{
+					"include": "#nest_curly_r"
+				}
+			]
+		},
+		"nest_ltgt": {
+			"begin": "<",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": ">",
+			"patterns": [
+				{
+					"include": "#nest_ltgt"
+				}
+			]
+		},
+		"nest_ltgt_i": {
+			"begin": "<",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": ">",
+			"patterns": [
+				{
+					"include": "#interpolated_covscript"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_ltgt_i"
+				}
+			]
+		},
+		"nest_ltgt_r": {
+			"begin": "<",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": ">",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				},
+				{
+					"include": "#nest_ltgt_r"
+				}
+			]
+		},
+		"nest_parens": {
+			"begin": "\\(",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "\\)",
+			"patterns": [
+				{
+					"include": "#nest_parens"
+				}
+			]
+		},
+		"nest_parens_i": {
+			"begin": "\\(",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "\\)",
+			"patterns": [
+				{
+					"include": "#interpolated_covscript"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_parens_i"
+				}
+			]
+		},
+		"nest_parens_r": {
+			"begin": "\\(",
+			"captures": {
+				"0": {
+					"name": "punctuation.section.scope.covscript"
+				}
+			},
+			"end": "\\)",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				},
+				{
+					"include": "#nest_parens_r"
+				}
+			]
+		},
+		"regex_sub": {
+			"patterns": [
+				{
+					"include": "#interpolated_covscript"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.arbitrary-repetition.covscript"
+						},
+						"3": {
+							"name": "punctuation.definition.arbitrary-repetition.covscript"
+						}
+					},
+					"match": "({)\\d+(,\\d+)?(})",
+					"name": "string.regexp.arbitrary-repetition.covscript"
+				},
+				{
+					"begin": "\\[(?:\\^?])?",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.character-class.covscript"
+						}
+					},
+					"end": "]",
+					"name": "string.regexp.character-class.covscript",
+					"patterns": [
+						{
+							"include": "#escaped_char"
+						}
+					]
+				},
+				{
+					"begin": "\\(\\?#",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.begin.covscript"
+						}
+					},
+					"end": "\\)",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.end.covscript"
+						}
+					},
+					"name": "comment.line.number-sign.covscript",
+					"patterns": [
+						{
+							"include": "#escaped_char"
+						}
+					]
+				},
+				{
+					"begin": "\\(",
+					"captures": {
+						"0": {
+							"name": "punctuation.definition.group.covscript"
+						}
+					},
+					"end": "\\)",
+					"name": "string.regexp.group.covscript",
+					"patterns": [
+						{
+							"include": "#regex_sub"
+						}
+					]
+				},
+				{
+					"begin": "(?<=^|\\s)(#)\\s(?=[[a-zA-Z0-9,. \\t?!-][^\\x{00}-\\x{7F}]]*$)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.comment.covscript"
+						}
+					},
+					"comment": "We are restrictive in what we allow to go after the comment character to avoid false positives, since the availability of comments depend on regexp flags.",
+					"end": "$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.covscript"
+						}
+					},
+					"name": "comment.line.number-sign.covscript"
+				}
+			]
+		},
+		"yard": {
+			"name": "comment.line.yard.covscript",
+			"patterns": [
+				{
+					"include": "#yard_comment"
+				},
+				{
+					"include": "#yard_name_types"
+				},
+				{
+					"include": "#yard_param_types"
+				},
+				{
+					"include": "#yard_tag"
+				},
+				{
+					"include": "#yard_types"
+				},
+				{
+					"include": "#yard_directive"
+				}
+			]
+		},
+		"yard_comment": {
+			"comment": "For YARD tags that follow the tag-comment pattern",
+			"begin": "^(\\s*)(#)(\\s*)(@)(abstract|api|author|deprecated|example|macro|note|overload|since|todo|version)(?=\\s|$)",
+			"beginCaptures": {
+				"1": {
+					"name": "comment.line.yard.covscript"
+				},
+				"2": {
+					"name": "punctuation.definition.comment.covscript"
+				},
+				"3": {
+					"name": "comment.line.yard.covscript"
+				},
+				"4": {
+					"name": "comment.line.keyword.punctuation.yard.covscript"
+				},
+				"5": {
+					"name": "comment.line.keyword.yard.covscript"
+				}
+			},
+			"end": "^(?!\\s*#\\3\\s{2,})",
+			"contentName": "comment.line.string.yard.covscript",
+			"name": "comment.line.number-sign.covscript",
+			"patterns": [
+				{
+					"include": "#yard"
+				},
+				{
+					"include": "#yard_continuation"
+				}
+			]
+		},
+		"yard_name_types": {
+			"comment": "For YARD tags that follow the tag-name-types-comment pattern",
+			"begin": "^(\\s*)(#)(\\s*)(@)(attr|attr_reader|attr_writer|see|yieldparam)(?=\\s)(\\s+([a-z_][a-zA-Z_]*))?(\\s+((\\[).+(])))?",
+			"beginCaptures": {
+				"1": {
+					"name": "comment.line.yard.covscript"
+				},
+				"2": {
+					"name": "punctuation.definition.comment.covscript"
+				},
+				"3": {
+					"name": "comment.line.yard.covscript"
+				},
+				"4": {
+					"name": "comment.line.keyword.punctuation.yard.covscript"
+				},
+				"5": {
+					"name": "comment.line.keyword.yard.covscript"
+				},
+				"6": {
+					"name": "comment.line.yard.covscript"
+				},
+				"7": {
+					"name": "comment.line.parameter.yard.covscript"
+				},
+				"8": {
+					"name": "comment.line.yard.covscript"
+				},
+				"9": {
+					"name": "comment.line.type.yard.covscript"
+				},
+				"10": {
+					"name": "comment.line.punctuation.yard.covscript"
+				},
+				"11": {
+					"name": "comment.line.punctuation.yard.covscript"
+				}
+			},
+			"end": "^(?!\\s*#\\3\\s{2,})",
+			"contentName": "comment.line.string.yard.covscript",
+			"name": "comment.line.number-sign.covscript",
+			"patterns": [
+				{
+					"include": "#yard"
+				},
+				{
+					"include": "#yard_continuation"
+				}
+			]
+		},
+		"yard_param_types": {
+			"comment": "For YARD tags that follow the tag-param-types-comment pattern",
+			"begin": "^(\\s*)(#)(\\s*)(@)(option|param)(?=\\s)(\\s+([a-z_][a-zA-Z_]*:?))?(\\s+((\\[).+(])))?(\\s+(:[a-z_][a-zA-Z_]*))?",
+			"beginCaptures": {
+				"1": {
+					"name": "comment.line.yard.covscript"
+				},
+				"2": {
+					"name": "punctuation.definition.comment.covscript"
+				},
+				"3": {
+					"name": "comment.line.yard.covscript"
+				},
+				"4": {
+					"name": "comment.line.keyword.punctuation.yard.covscript"
+				},
+				"5": {
+					"name": "comment.line.keyword.yard.covscript"
+				},
+				"6": {
+					"name": "comment.line.yard.covscript"
+				},
+				"7": {
+					"name": "comment.line.parameter.yard.covscript"
+				},
+				"8": {
+					"name": "comment.line.yard.covscript"
+				},
+				"9": {
+					"name": "comment.line.type.yard.covscript"
+				},
+				"10": {
+					"name": "comment.line.punctuation.yard.covscript"
+				},
+				"11": {
+					"name": "comment.line.punctuation.yard.covscript"
+				},
+				"12": {
+					"name": "comment.line.punctuation.yard.covscript"
+				},
+				"13": {
+					"name": "comment.line.keyword.yard.covscript"
+				},
+				"14": {
+					"name": "comment.line.punctuation.yard.covscript"
+				}
+			},
+			"end": "^(?!\\s*#\\3\\s{2,})",
+			"contentName": "comment.line.string.yard.covscript",
+			"name": "comment.line.number-sign.covscript",
+			"patterns": [
+				{
+					"include": "#yard"
+				},
+				{
+					"include": "#yard_continuation"
+				}
+			]
+		},
+		"yard_tag": {
+			"comment": "For YARD tags that are just the tag",
+			"match": "^(\\s*)(#)(\\s*)(@)(private)$",
+			"captures": {
+				"1": {
+					"name": "comment.line.yard.covscript"
+				},
+				"2": {
+					"name": "punctuation.definition.comment.covscript"
+				},
+				"3": {
+					"name": "comment.line.yard.covscript"
+				},
+				"4": {
+					"name": "comment.line.keyword.punctuation.yard.covscript"
+				},
+				"5": {
+					"name": "comment.line.keyword.yard.covscript"
+				}
+			},
+			"name": "comment.line.number-sign.covscript"
+		},
+		"yard_types": {
+			"comment": "For YARD tags that follow the tag-types-comment pattern",
+			"begin": "^(\\s*)(#)(\\s*)(@)(throw|return)(?=\\s)(\\s+((\\[).+(])))?",
+			"beginCaptures": {
+				"1": {
+					"name": "comment.line.yard.covscript"
+				},
+				"2": {
+					"name": "punctuation.definition.comment.covscript"
+				},
+				"3": {
+					"name": "comment.line.yard.covscript"
+				},
+				"4": {
+					"name": "comment.line.keyword.punctuation.yard.covscript"
+				},
+				"5": {
+					"name": "comment.line.keyword.yard.covscript"
+				},
+				"6": {
+					"name": "comment.line.yard.covscript"
+				},
+				"7": {
+					"name": "comment.line.type.yard.covscript"
+				},
+				"8": {
+					"name": "comment.line.punctuation.yard.covscript"
+				},
+				"9": {
+					"name": "comment.line.punctuation.yard.covscript"
+				}
+			},
+			"end": "^(?!\\s*#\\3\\s{2,})",
+			"contentName": "comment.line.string.yard.covscript",
+			"name": "comment.line.number-sign.covscript",
+			"patterns": [
+				{
+					"include": "#yard"
+				},
+				{
+					"include": "#yard_continuation"
+				}
+			]
+		},
+		"yard_directive": {
+			"comment": "For YARD directives",
+			"begin": "^(\\s*)(#)(\\s*)(@!)(attribute|endgroup|group|macro|method|parse|scope|visibility)(\\s+((\\[).+(])))?(?=\\s)",
+			"beginCaptures": {
+				"1": {
+					"name": "comment.line.yard.covscript"
+				},
+				"2": {
+					"name": "punctuation.definition.comment.covscript"
+				},
+				"3": {
+					"name": "comment.line.yard.covscript"
+				},
+				"4": {
+					"name": "comment.line.keyword.punctuation.yard.covscript"
+				},
+				"5": {
+					"name": "comment.line.keyword.yard.covscript"
+				},
+				"6": {
+					"name": "comment.line.yard.covscript"
+				},
+				"7": {
+					"name": "comment.line.type.yard.covscript"
+				},
+				"8": {
+					"name": "comment.line.punctuation.yard.covscript"
+				},
+				"9": {
+					"name": "comment.line.punctuation.yard.covscript"
+				}
+			},
+			"end": "^(?!\\s*#\\3\\s{2,})",
+			"contentName": "comment.line.string.yard.covscript",
+			"name": "comment.line.number-sign.covscript",
+			"patterns": [
+				{
+					"include": "#yard"
+				},
+				{
+					"include": "#yard_continuation"
+				}
+			]
+		},
+		"yard_continuation": {
+			"match": "^\\s*#",
+			"name": "punctuation.definition.comment.covscript"
+		}
+	}
+}
