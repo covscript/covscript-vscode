@@ -1,0 +1,149 @@
+{
+    "println": {
+        "prefix": "sout",
+        "body": [
+            "system.out.println($0)"
+        ]
+    },
+    "import": {
+        "prefix": "import",
+        "body": [
+            "import $0"
+        ]
+    },
+    "package": {
+        "prefix": "package",
+        "body": [
+            "package $0"
+        ]
+    },
+    "using": {
+        "prefix": "using",
+        "body": [
+            "using $0"
+        ]
+    },
+    "try-catch": {
+		"prefix": "try",
+		"body": [
+			"try",
+			"\t$1",
+			"catch(ex)",
+			"\t$2",
+			"end"
+		]
+	},
+	"class/struct definition": {
+		"prefix": ["class", "struct"],
+		"body": [
+			"class ${1:ClassName}",
+			"\tfunction initialize()",
+			"\t\t$0",
+			"\tend",
+			"end"
+		]
+    },
+    "namespace definition": {
+		"prefix": "namespace",
+		"body": [
+			"namespace ${1:NameSpaceName}",
+			"end"
+		]
+    },
+	"for enumerable": {
+		"prefix": ["foreach", "for"],
+		"body": [
+			"foreach ${1:value} in ${2:enumerable}",
+			"\t$0",
+			"end"
+		]
+    },
+    "for range": {
+		"prefix": ["foreach", "for"],
+		"body": [
+			"foreach ${1:i} in range($2)",
+			"\t$0",
+			"end"
+		]
+    },
+    "for range do": {
+		"prefix": ["foreachdo", "fordo"],
+		"body": [
+			"foreach ${1:i} in range($2) do $0"
+		]
+	},
+	"if": {
+		"prefix": "if",
+		"body": [
+			"if ${1:test}",
+			"\t$0",
+			"end"
+		]
+	},
+	"if else": {
+		"prefix": "if else",
+		"body": [
+			"if ${1:test}",
+			"\t$0",
+			"else",
+			"\t",
+			"end"
+		]
+	},
+	"switch": {
+		"prefix": "switch",
+		"body": [
+            "switch ${1:test}",
+            "\t$0",
+			"end"
+		]
+    },
+    "case": {
+		"prefix": "case",
+		"body": [
+            "case ${1:constant}",
+            "\t$0",
+			"end"
+		]
+    },
+    "default": {
+		"prefix": "default",
+		"body": [
+            "default",
+            "\t$0",
+			"end"
+		]
+	},
+	"forever loop": {
+		"prefix": "loop",
+		"body": [
+			"loop",
+			"\t$0",
+			"end"
+		]
+    },
+    "until loop": {
+		"prefix": "loopuntil",
+		"body": [
+			"loop",
+			"\t$0",
+			"until ${1:test}"
+		]
+	},
+	"while loop": {
+		"prefix": "while",
+		"body": [
+			"while ${1:test}",
+			"\t$0",
+			"end"
+		]
+	},
+	"function definition": {
+		"prefix": "function",
+		"body": [
+			"function ${1:functionName}($2)",
+			"\t$0",
+			"end"
+		]
+	}
+}
