@@ -90,7 +90,7 @@
 		},
 		{
 			"comment": "everything being a reserved word, not a value and needing a 'end' is a..",
-			"match": "(?<!\\.)\\b(switch|case|class|function|struct|namespace|else|end|for|foreach|if|package|loop|until|while)\\b(?![?!])",
+			"match": "(?<!\\.)\\b(switch|struct|function|namespace|class|else|end|for|if|loop|until|while)\\b(?![?!])",
 			"name": "keyword.control.covscript"
 		},
 		{
@@ -104,38 +104,42 @@
 			"name": "meta.syntax.covscript.start-block"
 		},
 		{
-			"match": "(?<!\\.)\\b(break|contiune|return|this)\\b(?![?!])|\\bdefined\\?|\\b(block_given|iterator)\\?",
+			"match": "(?<!\\.)\\b(continue|break|return|this|var|constant)\\b(?![?!])|\\bdefined\\?|\\b(block_given|iterator)\\?",
 			"name": "keyword.control.pseudo-method.covscript"
 		},
 		{
 			"match": "\\bnull\\b(?![?!])",
-			"name": "constant.language.null.covscript"
+			"name": "constant.language.nil.covscript"
 		},
 		{
 			"match": "\\b(true|false)\\b(?![?!])",
 			"name": "constant.language.boolean.covscript"
 		},
 		{
-			"match": "\\bthis\\b(?![?!])",
-			"name": "variable.language.this.covscript"
+			"match": "\\b(__(FILE|LINE)__)\\b(?![?!])",
+			"name": "variable.language.covscript"
+		},
+		{
+			"match": "\\bself\\b(?![?!])",
+			"name": "variable.language.self.covscript"
 		},
 		{
 			"comment": " everything being a method but having a special function is a..",
-			"match": "\\b(initialize|equal|duplicate|new|gcnew|extend|using)\\b(?![?!])",
+			"match": "\\b(initialize|equal|duplicate|new|gcnew|loop|import|extend|catch|throw|using)\\b(?![?!])",
 			"name": "keyword.other.special-method.covscript"
 		},
 		{
-			"begin": "\\b(?<!\\.|::)(import|runtime\\.import|runtime\\.source_import)\\b(?![?!])",
+			"begin": "\\b(?<!\\.|::)(import)\\b(?![?!])",
 			"captures": {
 				"1": {
 					"name": "keyword.other.special-method.covscript"
 				}
 			},
 			"end": "$|(?=#|})",
-			"name": "meta.import.covscript",
+			"name": "meta.require.covscript",
 			"patterns": [
 				{
-					"include": "$this"
+					"include": "$self"
 				}
 			]
 		},
@@ -174,6 +178,21 @@
 			},
 			"match": "(\\$)(!|@|&|`|'|\\+|\\d+|~|=|/|\\\\|,|;|\\.|<|>|_|\\*|\\$|\\?|:|\"|-[0adFiIlpv])",
 			"name": "variable.other.readwrite.global.pre-defined.covscript"
+		},
+		{
+			"begin": "\\b(ENV)\\[",
+			"beginCaptures": {
+				"1": {
+					"name": "variable.other.constant.covscript"
+				}
+			},
+			"end": "]",
+			"name": "meta.environment-variable.covscript",
+			"patterns": [
+				{
+					"include": "$self"
+				}
+			]
 		},
 		{
 			"match": "\\b[A-Z]\\w*(?=((\\.|::)[A-Za-z]|\\[))",
@@ -227,7 +246,7 @@
 							"match": "\\G([&*]?)(?:([_a-zA-Z]\\w*(:))|([_a-zA-Z]\\w*))"
 						},
 						{
-							"include": "$this"
+							"include": "$self"
 						}
 					]
 				}
@@ -269,7 +288,7 @@
 							"match": "\\G([&*]?)(?:([_a-zA-Z]\\w*(:))|([_a-zA-Z]\\w*))"
 						},
 						{
-							"include": "$this"
+							"include": "$self"
 						}
 					]
 				}
@@ -331,7 +350,7 @@
 			"name": "constant.language.symbol.interpolated.covscript",
 			"patterns": [
 				{
-					"include": "#interpolated_covscript"
+					"include": "#interpolated_ruby"
 				},
 				{
 					"include": "#escaped_char"
@@ -382,7 +401,7 @@
 			"name": "string.quoted.double.interpolated.covscript",
 			"patterns": [
 				{
-					"include": "#interpolated_covscript"
+					"include": "#interpolated_ruby"
 				},
 				{
 					"include": "#escaped_char"
@@ -406,7 +425,7 @@
 			"name": "string.interpolated.covscript",
 			"patterns": [
 				{
-					"include": "#interpolated_covscript"
+					"include": "#interpolated_ruby"
 				},
 				{
 					"include": "#escaped_char"
@@ -433,6 +452,990 @@
 			]
 		},
 		{
+			"begin": "%r{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.begin.covscript"
+				}
+			},
+			"end": "}[eimnosux]*",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.end.covscript"
+				}
+			},
+			"name": "string.regexp.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				},
+				{
+					"include": "#nest_curly_r"
+				}
+			]
+		},
+		{
+			"begin": "%r\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.begin.covscript"
+				}
+			},
+			"end": "][eimnosux]*",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.end.covscript"
+				}
+			},
+			"name": "string.regexp.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				},
+				{
+					"include": "#nest_brackets_r"
+				}
+			]
+		},
+		{
+			"begin": "%r\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.begin.covscript"
+				}
+			},
+			"end": "\\)[eimnosux]*",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.end.covscript"
+				}
+			},
+			"name": "string.regexp.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				},
+				{
+					"include": "#nest_parens_r"
+				}
+			]
+		},
+		{
+			"begin": "%r<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.begin.covscript"
+				}
+			},
+			"end": ">[eimnosux]*",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.end.covscript"
+				}
+			},
+			"name": "string.regexp.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				},
+				{
+					"include": "#nest_ltgt_r"
+				}
+			]
+		},
+		{
+			"begin": "%r([^\\w])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.begin.covscript"
+				}
+			},
+			"end": "\\1[eimnosux]*",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.regexp.end.covscript"
+				}
+			},
+			"name": "string.regexp.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#regex_sub"
+				}
+			]
+		},
+		{
+			"begin": "%I\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_brackets_i"
+				}
+			]
+		},
+		{
+			"begin": "%I\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_parens_i"
+				}
+			]
+		},
+		{
+			"begin": "%I<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_ltgt_i"
+				}
+			]
+		},
+		{
+			"begin": "%I{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_curly_i"
+				}
+			]
+		},
+		{
+			"begin": "%I([^\\w])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "\\1",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "%i\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\]|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_brackets"
+				}
+			]
+		},
+		{
+			"begin": "%i\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\\\)|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_parens"
+				}
+			]
+		},
+		{
+			"begin": "%i<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\>|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_ltgt"
+				}
+			]
+		},
+		{
+			"begin": "%i{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\}|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_curly"
+				}
+			]
+		},
+		{
+			"begin": "%i([^\\w])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "\\1",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"comment": "Cant be named because its not neccesarily an escape.",
+					"match": "\\\\."
+				}
+			]
+		},
+		{
+			"begin": "%W\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_brackets_i"
+				}
+			]
+		},
+		{
+			"begin": "%W\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_parens_i"
+				}
+			]
+		},
+		{
+			"begin": "%W<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_ltgt_i"
+				}
+			]
+		},
+		{
+			"begin": "%W{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_curly_i"
+				}
+			]
+		},
+		{
+			"begin": "%W([^\\w])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "\\1",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "%w\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"match": "\\\\]|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_brackets"
+				}
+			]
+		},
+		{
+			"begin": "%w\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"match": "\\\\\\)|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_parens"
+				}
+			]
+		},
+		{
+			"begin": "%w<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"match": "\\\\>|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_ltgt"
+				}
+			]
+		},
+		{
+			"begin": "%w{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"match": "\\\\}|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_curly"
+				}
+			]
+		},
+		{
+			"begin": "%w([^\\w])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.section.array.begin.covscript"
+				}
+			},
+			"end": "\\1",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.section.array.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"comment": "Cant be named because its not neccesarily an escape.",
+					"match": "\\\\."
+				}
+			]
+		},
+		{
+			"begin": "%[Qx]?\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_parens_i"
+				}
+			]
+		},
+		{
+			"begin": "%[Qx]?\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_brackets_i"
+				}
+			]
+		},
+		{
+			"begin": "%[Qx]?{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_curly_i"
+				}
+			]
+		},
+		{
+			"begin": "%[Qx]?<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				},
+				{
+					"include": "#nest_ltgt_i"
+				}
+			]
+		},
+		{
+			"begin": "%[Qx]([^\\w])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "\\1",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "%([^\\w\\s=])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "\\1",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.interpolated.covscript",
+			"patterns": [
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "%q\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"match": "\\\\\\)|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_parens"
+				}
+			]
+		},
+		{
+			"begin": "%q<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"match": "\\\\>|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_ltgt"
+				}
+			]
+		},
+		{
+			"begin": "%q\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"match": "\\\\]|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_brackets"
+				}
+			]
+		},
+		{
+			"begin": "%q{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"match": "\\\\}|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_curly"
+				}
+			]
+		},
+		{
+			"begin": "%q([^\\w])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "\\1",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.other.covscript",
+			"patterns": [
+				{
+					"comment": "Cant be named because its not neccesarily an escape.",
+					"match": "\\\\."
+				}
+			]
+		},
+		{
+			"begin": "%s\\(",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.begin.covscript"
+				}
+			},
+			"end": "\\)",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\\\)|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_parens"
+				}
+			]
+		},
+		{
+			"begin": "%s<",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.begin.covscript"
+				}
+			},
+			"end": ">",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\>|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_ltgt"
+				}
+			]
+		},
+		{
+			"begin": "%s\\[",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.begin.covscript"
+				}
+			},
+			"end": "]",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\]|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_brackets"
+				}
+			]
+		},
+		{
+			"begin": "%s{",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.begin.covscript"
+				}
+			},
+			"end": "}",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"match": "\\\\}|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
+					"include": "#nest_curly"
+				}
+			]
+		},
+		{
+			"begin": "%s([^\\w])",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.begin.covscript"
+				}
+			},
+			"end": "\\1",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.symbol.end.covscript"
+				}
+			},
+			"name": "constant.language.symbol.covscript",
+			"patterns": [
+				{
+					"comment": "Cant be named because its not neccesarily an escape.",
+					"match": "\\\\."
+				}
+			]
+		},
+		{
 			"captures": {
 				"1": {
 					"name": "punctuation.definition.constant.covscript"
@@ -441,6 +1444,17 @@
 			"comment": "symbols",
 			"match": "(?x)\n(?<!:)(:)\n(?>\n  [$a-zA-Z_]\\w*(?>[?!]|=(?![>=]))?\n  |\n  ===?|<=>|>[>=]?|<[<=]?|[%&`/\\|]|\\*\\*?|=?~|[-+]@?|\\[]=?\n  |\n  @@?[a-zA-Z_]\\w*\n)",
 			"name": "constant.language.symbol.covscript"
+		},
+		{
+			"begin": "^=begin",
+			"captures": {
+				"0": {
+					"name": "punctuation.definition.comment.covscript"
+				}
+			},
+			"comment": "multiline comments",
+			"end": "^=end",
+			"name": "comment.block.documentation.covscript"
 		},
 		{
 			"include": "#yard"
@@ -472,15 +1486,632 @@
 			"name": "constant.numeric.covscript"
 		},
 		{
+			"begin": "^__END__\\n",
+			"captures": {
+				"0": {
+					"name": "string.unquoted.program-block.covscript"
+				}
+			},
+			"comment": "__END__ marker",
+			"contentName": "text.plain",
+			"end": "(?=not)impossible",
+			"patterns": [
+				{
+					"begin": "(?=<?xml|<(?i:html\\b)|!DOCTYPE (?i:html\\b))",
+					"end": "(?=not)impossible",
+					"name": "text.html.embedded.covscript",
+					"patterns": [
+						{
+							"include": "text.html.basic"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)HTML)\\b\\1))",
+			"comment": "Heredoc with embedded html",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.html",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)HTML)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "text.html",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "text.html.basic"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)XML)\\b\\1))",
+			"comment": "Heredoc with embedded xml",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.xml",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)XML)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "text.xml",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "text.xml"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)SQL)\\b\\1))",
+			"comment": "Heredoc with embedded sql",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.sql",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)SQL)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.sql",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.sql"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)GRAPHQL)\\b\\1))",
+			"comment": "Heredoc with embedded GraphQL",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.graphql",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)GRAPHQL)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.graphql",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.graphql"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)CSS)\\b\\1))",
+			"comment": "Heredoc with embedded css",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.css",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)CSS)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.css",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.css"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)CPP)\\b\\1))",
+			"comment": "Heredoc with embedded c++",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.cpp",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)CPP)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.cpp",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.cpp"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)C)\\b\\1))",
+			"comment": "Heredoc with embedded c",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.c",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)C)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.c",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.c"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)(?:JS|JAVASCRIPT))\\b\\1))",
+			"comment": "Heredoc with embedded javascript",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.js",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)(?:JS|JAVASCRIPT))\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.js",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.js"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)JQUERY)\\b\\1))",
+			"comment": "Heredoc with embedded jQuery javascript",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.js.jquery",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)JQUERY)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.js.jquery",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.js.jquery"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)(?:SH|SHELL))\\b\\1))",
+			"comment": "Heredoc with embedded shell",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.shell",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)(?:SH|SHELL))\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.shell",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.shell"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)LUA)\\b\\1))",
+			"comment": "Heredoc with embedded lua",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.lua",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)LUA)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.lua",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.lua"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)covscript)\\b\\1))",
+			"comment": "Heredoc with embedded covscript",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.covscript",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)covscript)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "source.covscript",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "source.covscript"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?=(?><<[-~]([\"'`]?)((?:[_\\w]+_|)SLIM)\\b\\1))",
+			"comment": "Heredoc with embedded slim",
+			"end": "(?!\\G)",
+			"name": "meta.embedded.block.slim",
+			"patterns": [
+				{
+					"begin": "(?><<[-~]([\"'`]?)((?:[_\\w]+_|)SLIM)\\b\\1)",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.begin.covscript"
+						}
+					},
+					"contentName": "text.slim",
+					"end": "^\\s*\\2$\\n?",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.string.end.covscript"
+						}
+					},
+					"name": "string.unquoted.heredoc.covscript",
+					"patterns": [
+						{
+							"include": "#heredoc"
+						},
+						{
+							"include": "#interpolated_ruby"
+						},
+						{
+							"include": "text.slim"
+						},
+						{
+							"include": "#escaped_char"
+						}
+					]
+				}
+			]
+		},
+		{
+			"begin": "(?>=\\s*<<([\"'`]?)(\\w+)\\1)",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "^\\2$",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.unquoted.heredoc.covscript",
+			"patterns": [
+				{
+					"include": "#heredoc"
+				},
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "(?>((<<[-~]([\"'`]?)(\\w+)\\3,\\s?)*<<[-~]([\"'`]?)(\\w+)\\5))(.*)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.string.begin.covscript"
+				},
+				"7": {
+					"patterns": [
+						{
+							"include": "source.covscript"
+						}
+					]
+				}
+			},
+			"comment": "heredoc with multiple inputs and indented terminator",
+			"end": "^\\s*\\6$",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.unquoted.heredoc.covscript",
+			"patterns": [
+				{
+					"include": "#heredoc"
+				},
+				{
+					"include": "#interpolated_ruby"
+				},
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "(?<={|{\\s|[^A-Za-z0-9_]do|^do|[^A-Za-z0-9_]do\\s|^do\\s)(\\|)",
+			"name": "meta.block.parameters.covscript",
+			"captures": {
+				"1": {
+					"name": "punctuation.separator.variable.covscript"
+				}
+			},
+			"end": "(?<!\\|)(\\|)(?!\\|)",
+			"patterns": [
+				{
+					"begin": "(?![\\s,|(])",
+					"end": "(?=,|\\|\\s*)",
+					"patterns": [
+						{
+							"match": "\\G([&*]?)([a-zA-Z][\\w_]*)|(_[\\w_]*)",
+							"captures": {
+								"1": {
+									"name": "storage.type.variable.covscript"
+								},
+								"2": {
+									"name": "variable.other.block.covscript"
+								},
+								"3": {
+									"name": "variable.other.block.unused.covscript variable.other.constant.covscript"
+								}
+							}
+						}
+					]
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.variable.covscript"
+				}
+			]
+		},
+		{
+			"match": "=>",
+			"name": "punctuation.separator.key-value"
+		},
+		{
 			"match": "->",
 			"name": "support.function.kernel.covscript"
 		},
 		{
-			"match": "<<=|%=|&{1,2}=|\\*=|\\*\\*=|\\+=|-=|\\|{1,2}=|<<",
+			"match": "<<=|%=|&{1,2}=|\\*=|\\*\\*=|\\+=|-=|\\^=|\\|{1,2}=|<<",
 			"name": "keyword.operator.assignment.augmented.covscript"
 		},
 		{
-			"match": "<(?!<|=)|>(?!<|=|>)|<=|>=|==|!=|(?<=[ \\t])\\?",
+			"match": "<=>|<(?!<|=)|>(?!<|=|>)|<=|>=|===|==|=~|!=|!~|(?<=[ \\t])\\?",
 			"name": "keyword.operator.comparison.covscript"
 		},
 		{
@@ -501,12 +2132,16 @@
 			}
 		},
 		{
-			"match": "(%|\\^|\\*|\\+|-|/)",
+			"match": "(%|&|\\*\\*|\\*|\\+|-|/)",
 			"name": "keyword.operator.arithmetic.covscript"
 		},
 		{
 			"match": "=",
 			"name": "keyword.operator.assignment.covscript"
+		},
+		{
+			"match": "\\||~|>>",
+			"name": "keyword.operator.other.covscript"
 		},
 		{
 			"match": ";",
@@ -517,6 +2152,15 @@
 			"name": "punctuation.separator.object.covscript"
 		},
 		{
+			"comment": "Mark as namespace separator if double colons followed by capital letter",
+			"match": "(::)\\s*(?=[A-Z])",
+			"captures": {
+				"1": {
+					"name": "punctuation.separator.namespace.covscript"
+				}
+			}
+		},
+		{
 			"comment": "Mark as method separator if double colons not followed by capital letter",
 			"match": "(\\.|::)\\s*(?![A-Z])",
 			"captures": {
@@ -524,6 +2168,11 @@
 					"name": "punctuation.separator.method.covscript"
 				}
 			}
+		},
+		{
+			"comment": "Must come after method and constant separators to prefer double colons",
+			"match": ":",
+			"name": "punctuation.separator.other.covscript"
 		},
 		{
 			"match": "{",
@@ -561,9 +2210,14 @@
 					"name": "entity.name.function.covscript"
 				},
 				{
-					"include": "$this"
+					"include": "$self"
 				}
 			]
+		},
+		{
+			"comment": "This is kindof experimental. There really is no way to perfectly match all regular variables, but you can pretty well assume that any normal word in certain curcumstances that haven't already been scoped as something else are probably variables, and the advantages beat the potential errors",
+			"match": "((?<=\\W)\\b|^)\\w+\\b(?=\\s*([\\]\\)\\}\\=\\+\\-\\*\\/\\^\\$\\,\\.\\&]|<\\s|<<[\\s|\\.]))",
+			"name": "variable.other.covscript"
 		}
 	],
 	"repository": {
@@ -576,21 +2230,21 @@
 			"end": "$",
 			"patterns": [
 				{
-					"include": "$this"
+					"include": "$self"
 				}
 			]
 		},
-		"interpolated_covscript": {
+		"interpolated_ruby": {
 			"patterns": [
 				{
-					"begin": "@begin",
+					"begin": "#{",
 					"beginCaptures": {
 						"0": {
 							"name": "punctuation.section.embedded.begin.covscript"
 						}
 					},
 					"contentName": "source.covscript",
-					"end": "@end",
+					"end": "}",
 					"endCaptures": {
 						"0": {
 							"name": "punctuation.section.embedded.end.covscript"
@@ -602,7 +2256,7 @@
 							"include": "#nest_curly_and_self"
 						},
 						{
-							"include": "$this"
+							"include": "$self"
 						}
 					]
 				},
@@ -659,7 +2313,7 @@
 			"end": "]",
 			"patterns": [
 				{
-					"include": "#interpolated_covscript"
+					"include": "#interpolated_ruby"
 				},
 				{
 					"include": "#escaped_char"
@@ -717,7 +2371,7 @@
 					]
 				},
 				{
-					"include": "$this"
+					"include": "$self"
 				}
 			]
 		},
@@ -731,7 +2385,7 @@
 			"end": "}",
 			"patterns": [
 				{
-					"include": "#interpolated_covscript"
+					"include": "#interpolated_ruby"
 				},
 				{
 					"include": "#escaped_char"
@@ -782,7 +2436,7 @@
 			"end": ">",
 			"patterns": [
 				{
-					"include": "#interpolated_covscript"
+					"include": "#interpolated_ruby"
 				},
 				{
 					"include": "#escaped_char"
@@ -833,7 +2487,7 @@
 			"end": "\\)",
 			"patterns": [
 				{
-					"include": "#interpolated_covscript"
+					"include": "#interpolated_ruby"
 				},
 				{
 					"include": "#escaped_char"
@@ -863,7 +2517,7 @@
 		"regex_sub": {
 			"patterns": [
 				{
-					"include": "#interpolated_covscript"
+					"include": "#interpolated_ruby"
 				},
 				{
 					"include": "#escaped_char"
@@ -1136,7 +2790,7 @@
 		},
 		"yard_types": {
 			"comment": "For YARD tags that follow the tag-types-comment pattern",
-			"begin": "^(\\s*)(#)(\\s*)(@)(throw|return)(?=\\s)(\\s+((\\[).+(])))?",
+			"begin": "^(\\s*)(#)(\\s*)(@)(raise|return|yield(?:return)?)(?=\\s)(\\s+((\\[).+(])))?",
 			"beginCaptures": {
 				"1": {
 					"name": "comment.line.yard.covscript"
