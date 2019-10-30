@@ -3,6 +3,7 @@
     "displayName": "CovScript",
     "description": "The CovScript 3 language support for VSCode",
     "version": "0.0.1",
+    "publisher": "covscript",
     "repository": {
 		"type": "git",
 		"url": "https://github.com/covscript/covscript-vscode.git"
