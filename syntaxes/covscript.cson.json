@@ -90,7 +90,7 @@
 		},
 		{
 			"comment": "everything being a reserved word, not a value and needing a 'end' is a..",
-			"match": "(?<!\\.)\\b(switch|struct|function|namespace|class|else|end|for|if|loop|until|while)\\b(?![?!])",
+			"match": "(?<!\\.)\\b(switch|struct|function|namespace|class|else|end|foreach|for|if|loop|until|while)\\b(?![?!])",
 			"name": "keyword.control.covscript"
 		},
 		{
@@ -125,7 +125,7 @@
 		},
 		{
 			"comment": " everything being a method but having a special function is a..",
-			"match": "\\b(initialize|equal|duplicate|new|gcnew|loop|import|extend|catch|throw|using)\\b(?![?!])",
+			"match": "\\b(initialize|equal|duplicate|to_string|new|gcnew|loop|import|extend|catch|throw|using)\\b(?![?!])",
 			"name": "keyword.other.special-method.covscript"
 		},
 		{
