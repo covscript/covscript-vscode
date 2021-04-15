@@ -18,18 +18,9 @@
 				},
 				"4": {
 					"name": "entity.other.inherited-class.covscript"
-				},
-				"5": {
-					"name": "punctuation.separator.inheritance.covscript"
-				},
-				"6": {
-					"name": "variable.other.object.covscript"
-				},
-				"7": {
-					"name": "punctuation.definition.variable.covscript"
 				}
 			},
-			"match": "(?x)\n^\\s*(class|struct)\\s+\n(\n  (\n    [.a-zA-Z0-9_:]+\n    (\\s*(<)\\s*[.a-zA-Z0-9_:]+)?   # class A < B\n  )\n  |\n  ((<<)\\s*[.a-zA-Z0-9_:]+)         # class << C\n)",
+			"match": "(?x)\n^\\s*(class|struct)\\s+([A-Za-z_]\\w*)\\s+(extends\\s+(.*)\n)",
 			"name": "meta.class.covscript"
 		},
 		{
@@ -89,7 +80,7 @@
 		},
 		{
 			"comment": "everything being a reserved word, not a value and needing a 'end' is a..",
-			"match": "(?<!\\.)\\b(switch|struct|function|namespace|class|else|end|foreach|for|if|loop|until|while)\\b(?![?!])",
+			"match": "(?<!\\.)\\b(switch|struct|function|namespace|class|else|end|foreach|for|in|if|loop|until|while)\\b(?![?!])",
 			"name": "keyword.control.covscript"
 		},
 		{
@@ -124,7 +115,7 @@
 		},
 		{
 			"comment": " everything being a method but having a special function is a..",
-			"match": "\\b(initialize|equal|duplicate|to_string|new|gcnew|loop|import|extend|catch|throw|using)\\b(?![?!])",
+			"match": "\\b(initialize|equal|duplicate|to_string|new|gcnew|loop|import|as|extends|catch|throw|using)\\b(?![?!])",
 			"name": "keyword.other.special-method.covscript"
 		},
 		{
