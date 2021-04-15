@@ -63,19 +63,17 @@
 			"name": "meta.package.covscript"
 		},
 		{
-			"captures": {
-				"1": {
+			"begin": "^\\s*(var|constant|link)",
+			"beginCaptures": {
+				"0": {
 					"name": "keyword.control.using.covscript"
-				},
-				"2": {
-					"name": "entity.name.type.namespace.covscript"
 				}
 			},
-			"match": "^\\s*(var|constant|link)\\s+([A-Za-z_]\\w*\\s*=.*?(\\s*,\\s*[A-Za-z_]\\w*\\s*=.*?)*)\\s*$",
+			"end": "$",
 			"name": "meta.var.covscript",
 			"patterns": [
 				{
-					"include": "#keyword.operator.reserved.covscript"
+					"include": "#variable_definition"
 				}
 			]
 		},
@@ -98,7 +96,19 @@
 			"name": "meta.class.covscript"
 		},
 		{
-			"match": "\\b(and|or|not|typeid|new|gcnew|null|local|global|true|false)\\b",
+			"match": "\\bnull\\b(?![?!])",
+			"name": "constant.language.nil.covscript"
+		},
+		{
+			"match": "\\b(true|false)\\b(?![?!])",
+			"name": "constant.language.boolean.covscript"
+		},
+		{
+			"match": "\\b(this|self)\\b(?![?!])",
+			"name": "variable.language.self.covscript"
+		},
+		{
+			"match": "\\b(and|or|not|typeid|new|gcnew|local|global)\\b(?![?!])",
 			"name": "keyword.operator.reserved.covscript"
 		},
 		{
@@ -106,12 +116,123 @@
 			"name": "keyword.control.reserved.covscript"
 		},
 		{
-			"match": "^\\s*(namespace|if|switch|case|while|until|return|throw)\\b",
+			"match": "^\\s*(namespace|if|switch|case|while|until|return|throw)\\b(?![?!])",
 			"name": "keyword.control.reserved.covscript"
 		},
 		{
-			"match": "\\b(\\+|-|\\*|/|=)\\b",
+			"match": "\\b(\\+|-|\\*|/|=)\\b(?![?!])",
 			"name": "keyword.operator.reserved.covscript"
+		},
+		{
+			"match": "^\\s*(@[A-Za-z_]\\w*)\\s*(:\\s*[A-Za-z_]\\w*\\s*)?$",
+			"name": "entity.name.tag.preprocessor.covscript"
+		},
+		{
+			"match": "^\\s*#.*$",
+			"name": "comment.line.number-sign"
+		},
+		{
+			"match": "\b[0-9]+(.[0-9]+)?\b(?![?!])",
+			"name": "constant.numeric"
+		},
+		{
+			"begin": "'",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"comment": "string literal with '' delimitor",
+			"end": "'",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.single.covscript",
+			"patterns": [
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"comment": "string literal with interpolation and \"\" delimitor",
+			"end": "\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.double.covscript",
+			"patterns": [
+				{
+					"include": "#escaped_char"
+				}
+			]
+		},
+		{
+			"match": ";",
+			"name": "punctuation.separator.statement.covscript"
+		},
+		{
+			"match": ",",
+			"name": "punctuation.separator.object.covscript"
+		},
+		{
+			"match": "{",
+			"name": "punctuation.section.scope.begin.covscript"
+		},
+		{
+			"match": "}",
+			"name": "punctuation.section.scope.end.covscript"
+		},
+		{
+			"match": "\\[",
+			"name": "punctuation.section.array.begin.covscript"
+		},
+		{
+			"match": "]",
+			"name": "punctuation.section.array.end.covscript"
+		},
+		{
+			"match": "\\(|\\)",
+			"name": "punctuation.section.function.covscript"
+		},
+		{
+			"begin": "(?=[a-zA-Z0-9_!?]+\\()",
+			"end": "(?<=\\))",
+			"name": "meta.function-call.covscript",
+			"patterns": [
+				{
+					"match": "([a-zA-Z0-9_!?]+)((?=\\()|([!?]))",
+					"name": "entity.name.function.covscript"
+				},
+				{
+					"include": "$self"
+				}
+			]
 		}
-	]
+	],
+	"repository": {
+		"escaped_char": {
+			"match": "\\\\(a|b|f|n|r|t|v|\\|'|\"|0)",
+			"name": "constant.character.escape.covscript"
+		},
+		"variable_definition": {
+			"captures": {
+				"1": {
+					"name": "variable.other.covscript"
+				}
+			},
+			"match": "([A-za-z_]\\w*)\\s*=",
+			"name": "meta.vardef.covscript"
+		}
+	}
 }
