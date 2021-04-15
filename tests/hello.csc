@@ -1,3 +1,5 @@
+import a as b
+
 function fuck(item)
     system.out.println(item)
     @begin
@@ -7,8 +9,9 @@ end
 
 system.out.println("aaa")
 var a = "sss"
+link a = "xxx"
 
-class ClassName
+class ClassName extend sss
     function initialize()
     end
 end

@@ -1,9 +1,8 @@
 {
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"name": "CovScript",
 	"scopeName": "source.covscript",
 	"fileTypes": [
-		"csbuild.config",
 		"csc",
 		"csp"
 	],
@@ -104,7 +103,7 @@
 			"name": "meta.syntax.covscript.start-block"
 		},
 		{
-			"match": "(?<!\\.)\\b(continue|break|return|this|var|constant)\\b(?![?!])|\\bdefined\\?|\\b(block_given|iterator)\\?",
+			"match": "(?<!\\.)\\b(continue|break|return|this|var|link|constant)\\b(?![?!])|\\bdefined\\?|\\b(block_given|iterator)\\?",
 			"name": "keyword.control.pseudo-method.covscript"
 		},
 		{

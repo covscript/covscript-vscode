@@ -1,21 +1,21 @@
 {
     "name": "covscript-vscode",
-    "displayName": "CovScript",
+    "displayName": "Covariant Script",
     "description": "The CovScript 3 language support for VSCode",
-    "version": "0.1.1",
+    "version": "1.0.0",
     "publisher": "covscript",
     "repository": {
-		"type": "git",
-		"url": "https://github.com/covscript/covscript-vscode.git"
-	},
-	"bugs": {
-		"url": "https://github.com/covscript/covscript-vscode/issues"
-	},
-	"author": {
-		"name": "imkiva"
-	},
-	"contributors": [
-    ],
+        "type": "git",
+        "url": "https://github.com/covscript/covscript-vscode.git"
+    },
+    "bugs": {
+        "url": "https://github.com/covscript/covscript-vscode/issues"
+    },
+    "author": {
+        "name": "CovScript.ORG"
+    },
+    "icon": "covscript.png",
+    "contributors": [],
     "license": "MIT",
     "engines": {
         "vscode": "^1.39.0"
@@ -24,24 +24,34 @@
         "Programming Languages"
     ],
     "contributes": {
-        "snippets": [{
-				"language": "covscript",
-				"path": "./snippets/covscript.json"
-        }],
-        "languages": [{
-            "id": "covscript",
-            "aliases": ["CovScript", "covscript"],
-            "extensions": [".csc",".csp"],
-            "firstLine": "^#!\\s*/.*(?:covscript|cs)\\b",
-            "filenames": [
-                "csbuild.config"
-            ],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "covscript",
-            "scopeName": "source.covscript",
-            "path": "./syntaxes/covscript.cson.json"
-        }]
+        "snippets": [
+            {
+                "language": "covscript",
+                "path": "./snippets/covscript.json"
+            }
+        ],
+        "languages": [
+            {
+                "id": "covscript",
+                "aliases": [
+                    "CovScript",
+                    "covscript"
+                ],
+                "extensions": [
+                    ".csc",
+                    ".csp"
+                ],
+                "firstLine": "^#!\\s*/.*(?:covscript|cs)\\b",
+                "filenames": [],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "covscript",
+                "scopeName": "source.covscript",
+                "path": "./syntaxes/covscript.cson.json"
+            }
+        ]
     }
 }
