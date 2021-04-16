@@ -84,7 +84,7 @@
 			]
 		},
 		{
-			"begin": "(?x)\n^\\s*(for)\\s+([A-Za-z_]\\w*)\\s*=\\b(?![?!])",
+			"begin": "(?x)\n^\\s*(for)\\s+([A-Za-z_]\\w*)\\s*=",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.for.covscript"
@@ -152,21 +152,6 @@
 					"include": "#args_list"
 				}
 			]
-		},
-		{
-			"captures": {
-				"1": {
-					"name": "keyword.control.function.covscript"
-				},
-				"2": {
-					"name": "entity.name.function.covscript"
-				},
-				"3": {
-					"name": "keyword.control.override.covscript"
-				}
-			},
-			"match": "(?x)\n^\\s*(function)\\s+([A-Za-z_]\\w*)\\s*\\(\\s*\\)\\s*(override)?\\s*$",
-			"name": "meta.function.no_args.covscript"
 		},
 		{
 			"begin": "(?x)\n^\\s*(class|struct)\\s+([A-Za-z_]\\w*)\\s+(extends)\\s+",
@@ -294,14 +279,6 @@
 			"name": "punctuation.section.scope.end.covscript"
 		},
 		{
-			"match": "\\[",
-			"name": "punctuation.section.array.begin.covscript"
-		},
-		{
-			"match": "]",
-			"name": "punctuation.section.array.end.covscript"
-		},
-		{
 			"match": "\\(|\\)",
 			"name": "punctuation.section.function.covscript"
 		},
@@ -318,6 +295,24 @@
 					"include": "$self"
 				}
 			]
+		},
+		{
+			"begin": "\\[\\]\\s*\\(",
+			"end": "\\)\\s*->",
+			"name": "meta.lambda_expression.covscript",
+			"patterns": [
+				{
+					"include": "#args_list"
+				}
+			]
+		},
+		{
+			"match": "\\[",
+			"name": "punctuation.section.array.begin.covscript"
+		},
+		{
+			"match": "]",
+			"name": "punctuation.section.array.end.covscript"
 		}
 	],
 	"repository": {
