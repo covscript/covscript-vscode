@@ -1,29 +1,29 @@
 {
-    "println": {
-        "prefix": "sout",
-        "body": [
-            "system.out.println($0)"
-        ]
-    },
-    "import": {
-        "prefix": "import",
-        "body": [
-            "import $0"
-        ]
-    },
-    "package": {
-        "prefix": "package",
-        "body": [
-            "package $0"
-        ]
-    },
-    "using": {
-        "prefix": "using",
-        "body": [
-            "using $0"
-        ]
-    },
-    "try-catch": {
+	"println": {
+		"prefix": "sout",
+		"body": [
+			"system.out.println($0)"
+		]
+	},
+	"import": {
+		"prefix": "import",
+		"body": [
+			"import $0"
+		]
+	},
+	"package": {
+		"prefix": "package",
+		"body": [
+			"package $0"
+		]
+	},
+	"using": {
+		"prefix": "using",
+		"body": [
+			"using $0"
+		]
+	},
+	"try-catch": {
 		"prefix": "try",
 		"body": [
 			"try",
@@ -34,7 +34,10 @@
 		]
 	},
 	"class/struct definition": {
-		"prefix": ["class", "struct"],
+		"prefix": [
+			"class",
+			"struct"
+		],
 		"body": [
 			"class ${1:ClassName}",
 			"\tfunction initialize()",
@@ -42,33 +45,42 @@
 			"\tend",
 			"end"
 		]
-    },
-    "namespace definition": {
+	},
+	"namespace definition": {
 		"prefix": "namespace",
 		"body": [
 			"namespace ${1:NameSpaceName}",
 			"\t$0",
 			"end"
 		]
-    },
+	},
 	"for enumerable": {
-		"prefix": ["foreach", "for"],
+		"prefix": [
+			"foreach",
+			"for"
+		],
 		"body": [
 			"foreach ${1:value} in ${2:enumerable}",
 			"\t$0",
 			"end"
 		]
-    },
-    "for range": {
-		"prefix": ["foreach", "for"],
+	},
+	"for range": {
+		"prefix": [
+			"foreach",
+			"for"
+		],
 		"body": [
 			"foreach ${1:i} in range($2)",
 			"\t$0",
 			"end"
 		]
-    },
-    "for range do": {
-		"prefix": ["foreachdo", "fordo"],
+	},
+	"for range do": {
+		"prefix": [
+			"foreachdo",
+			"fordo"
+		],
 		"body": [
 			"foreach ${1:i} in range($2) do $0"
 		]
@@ -94,24 +106,24 @@
 	"switch": {
 		"prefix": "switch",
 		"body": [
-            "switch ${1:test}",
-            "\t$0",
+			"switch ${1:test}",
+			"\t$0",
 			"end"
 		]
-    },
-    "case": {
+	},
+	"case": {
 		"prefix": "case",
 		"body": [
-            "case ${1:constant}",
-            "\t$0",
+			"case ${1:constant}",
+			"\t$0",
 			"end"
 		]
-    },
-    "default": {
+	},
+	"default": {
 		"prefix": "default",
 		"body": [
-            "default",
-            "\t$0",
+			"default",
+			"\t$0",
 			"end"
 		]
 	},
@@ -122,8 +134,8 @@
 			"\t$0",
 			"end"
 		]
-    },
-    "until loop": {
+	},
+	"until loop": {
 		"prefix": "loopuntil",
 		"body": [
 			"loop",
