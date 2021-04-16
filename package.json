@@ -1,9 +1,9 @@
 {
-    "name": "covscript-vscode",
+    "name": "covscript",
     "displayName": "Covariant Script",
     "description": "The CovScript 3 language support for VSCode",
     "version": "1.0.0",
-    "publisher": "covscript",
+    "publisher": "mikelee",
     "repository": {
         "type": "git",
         "url": "https://github.com/covscript/covscript-vscode.git"
@@ -12,7 +12,7 @@
         "url": "https://github.com/covscript/covscript-vscode/issues"
     },
     "author": {
-        "name": "CovScript.ORG"
+        "name": "Michael Lee"
     },
     "icon": "covscript.png",
     "contributors": [],

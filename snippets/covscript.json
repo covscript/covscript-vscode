@@ -28,7 +28,7 @@
 		"body": [
 			"try",
 			"\t$1",
-			"catch(ex)",
+			"catch except",
 			"\t$2",
 			"end"
 		]
@@ -82,7 +82,7 @@
 		]
 	},
 	"if else": {
-		"prefix": "if else",
+		"prefix": "ifelse",
 		"body": [
 			"if ${1:test}",
 			"\t$0",
@@ -145,6 +145,14 @@
 			"function ${1:functionName}($2)",
 			"\t$0",
 			"end"
+		]
+	},
+	"begin-end": {
+		"prefix": "@begin",
+		"body": [
+			"@begin",
+			"\t$0",
+			"@end"
 		]
 	}
 }

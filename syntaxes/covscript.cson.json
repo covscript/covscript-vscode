@@ -355,12 +355,12 @@
 			"name": "meta.vardef.covscript"
 		},
 		"structured_binding": {
-			"begin": "\\(",
-			"end": "\\)\\s*=",
+			"begin": "(?<=(var|constant|link)\\s*)\\(",
+			"end": "\\)(?==)",
 			"name": "meta.structured_binding.covscript",
 			"patterns": [
 				{
-					"match": "\\b([A-za-z_]\\w*)\\b(?![?!])",
+					"match": "[A-za-z_]\\w*",
 					"name": "variable.other.covscript"
 				}
 			]

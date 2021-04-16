@@ -5,26 +5,75 @@
     },
     // symbols used as brackets
     "brackets": [
-        ["{", "}"],
-        ["[", "]"],
-        ["(", ")"]
+        [
+            "{",
+            "}"
+        ],
+        [
+            "[",
+            "]"
+        ],
+        [
+            "(",
+            ")"
+        ]
     ],
     // symbols that are auto closed when typing
     "autoClosingPairs": [
-        { "open": "{", "close": "}" },
-		{ "open": "[", "close": "]" },
-		{ "open": "(", "close": ")" },
-		{ "open": "'", "close": "'", "notIn": ["string", "comment"] },
-		{ "open": "\"", "close": "\"", "notIn": ["string"] },
-		{ "open": "`", "close": "`", "notIn": ["string", "comment"] }
+        {
+            "open": "{",
+            "close": "}"
+        },
+        {
+            "open": "[",
+            "close": "]"
+        },
+        {
+            "open": "(",
+            "close": ")"
+        },
+        {
+            "open": "'",
+            "close": "'",
+            "notIn": [
+                "string",
+                "comment"
+            ]
+        },
+        {
+            "open": "\"",
+            "close": "\"",
+            "notIn": [
+                "string",
+                "comment"
+            ]
+        }
     ],
     // symbols that that can be used to surround a selection
     "surroundingPairs": [
-		["{", "}"],
-		["[", "]"],
-		["(", ")"],
-		["'", "'"],
-		["\"", "\""],
-		["`", "`"]
-    ]
+        [
+            "{",
+            "}"
+        ],
+        [
+            "[",
+            "]"
+        ],
+        [
+            "(",
+            ")"
+        ],
+        [
+            "'",
+            "'"
+        ],
+        [
+            "\"",
+            "\""
+        ]
+    ],
+    "indentationRules": {
+        "increaseIndentPattern": "^\\s*(block|namespace|if|else|switch|case|default|while|loop|for|foreach|try|function|class|struct).*\\s*$",
+        "decreaseIndentPattern": "^\\s*(else|end)\\s*$"
+    }
 }
