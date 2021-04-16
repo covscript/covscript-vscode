@@ -226,6 +226,10 @@
 			"name": "constant.numeric"
 		},
 		{
+			"match": "\\b(initialize|finalize|duplicate|equal|range|to_string|to_integer|type|clone|move|swap)\\b(?![?!])",
+			"name": "keyword.other.special-method.covscript"
+		},
+		{
 			"begin": "'",
 			"beginCaptures": {
 				"0": {
