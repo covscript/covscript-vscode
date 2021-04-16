@@ -51,7 +51,7 @@
 			"name": "meta.package.covscript"
 		},
 		{
-			"begin": "(?x)\n^\\s*(var|constant|link)\\s+",
+			"begin": "(?x)\n^\\s*(var|constant|link)\\b(?![?!])",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.var.covscript"
@@ -64,12 +64,15 @@
 					"include": "#variable_definition"
 				},
 				{
+					"include": "#structured_binding"
+				},
+				{
 					"include": "$self"
 				}
 			]
 		},
 		{
-			"begin": "(?x)\n^\\s*(using|namespace|if|switch|case|while|until|return|throw)\\s+",
+			"begin": "(?x)\n^\\s*(using|namespace|if|switch|case|while|until|return|throw)\\b(?![?!])",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.other.covscript"
@@ -346,6 +349,17 @@
 			},
 			"match": "([A-za-z_]\\w*)\\s*=",
 			"name": "meta.vardef.covscript"
+		},
+		"structured_binding": {
+			"begin": "\\(",
+			"end": "\\)\\s*=",
+			"name": "meta.structured_binding.covscript",
+			"patterns": [
+				{
+					"match": "\\b([A-za-z_]\\w*)\\b(?![?!])",
+					"name": "variable.other.covscript"
+				}
+			]
 		}
 	}
 }
