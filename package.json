@@ -2,7 +2,7 @@
     "name": "covscript",
     "displayName": "Covariant Script",
     "description": "The CovScript 3/4 language support for VSCode",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "publisher": "mikecovlee",
     "repository": {
         "type": "git",
