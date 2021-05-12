@@ -158,13 +158,5 @@
 			"\t$0",
 			"end"
 		]
-	},
-	"begin-end": {
-		"prefix": "@begin",
-		"body": [
-			"@begin",
-			"\t$0",
-			"@end"
-		]
 	}
 }

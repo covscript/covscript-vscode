@@ -15,7 +15,7 @@
 					"name": "keyword.control.import.covscript"
 				}
 			},
-			"end": "$",
+			"end": "(;|$)",
 			"name": "meta.import.covscript",
 			"patterns": [
 				{
@@ -57,7 +57,7 @@
 					"name": "keyword.control.var.covscript"
 				}
 			},
-			"end": "$",
+			"end": "(;|$)",
 			"name": "meta.var.covscript",
 			"patterns": [
 				{
@@ -72,13 +72,13 @@
 			]
 		},
 		{
-			"begin": "(?x)\n^\\s*(using|namespace|if|switch|case|while|until|return|throw)\\b(?![?!])",
+			"begin": "(?x)\n^\\s*(using|namespace|if|else\\s+if|switch|case|while|until|return|throw|catch)\\b(?![?!])",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.other.covscript"
 				}
 			},
-			"end": "$",
+			"end": "(;|$)",
 			"name": "meta.control_stmts.covscript",
 			"patterns": [
 				{
@@ -96,7 +96,7 @@
 					"name": "variable.other.covscript"
 				}
 			},
-			"end": "$",
+			"end": "(;|$)",
 			"name": "meta.for.covscript",
 			"patterns": [
 				{
@@ -121,7 +121,7 @@
 					"name": "keyword.control.in.covscript"
 				}
 			},
-			"end": "$",
+			"end": "(;|$)",
 			"name": "meta.foreach.covscript",
 			"patterns": [
 				{
@@ -169,7 +169,7 @@
 					"name": "keyword.control.extends.covscript"
 				}
 			},
-			"end": "$",
+			"end": "(;|$)",
 			"name": "meta.class_extends.covscript",
 			"patterns": [
 				{
@@ -213,8 +213,16 @@
 			"name": "keyword.control.reserved.covscript"
 		},
 		{
-			"match": "(?x)\n^\\s*(@[A-Za-z_]\\w*)\\s*(:\\s*[A-Za-z_]\\w*\\s*)?$",
-			"name": "entity.name.tag.preprocessor.covscript"
+			"captures": {
+				"1": {
+					"name": "entity.name.tag.preprocessor.covscript"
+				},
+				"2": {
+					"name": "variable.other.covscript"
+				}
+			},
+			"match": "(?x)\n^\\s*(@[A-Za-z_]\\w*)\\s*(:\\s*\\w+\\s*)?$",
+			"name": "meta.preprocessor.covscript"
 		},
 		{
 			"begin": "^\\s*#",
@@ -304,8 +312,8 @@
 			]
 		},
 		{
-			"begin": "\\[\\]\\s*\\(",
-			"end": "\\)\\s*->",
+			"begin": "\\[[\\w=,\\s]*\\]\\s*\\(",
+			"end": "\\)\\s*(->|\\{)",
 			"name": "meta.lambda_expression.covscript",
 			"patterns": [
 				{

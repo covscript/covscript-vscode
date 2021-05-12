@@ -1,8 +1,8 @@
 {
     "name": "covscript",
     "displayName": "Covariant Script",
-    "description": "The CovScript 3 language support for VSCode",
-    "version": "1.0.1",
+    "description": "The CovScript 3/4 language support for VSCode",
+    "version": "1.0.2",
     "publisher": "mikecovlee",
     "repository": {
         "type": "git",
@@ -39,7 +39,8 @@
                 ],
                 "extensions": [
                     ".csc",
-                    ".csp"
+                    ".csp",
+                    ".ecs"
                 ],
                 "firstLine": "^#!\\s*/.*(?:covscript|cs)\\b",
                 "filenames": [],
