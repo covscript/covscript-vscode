@@ -205,7 +205,7 @@
 			"name": "variable.language.self.covscript"
 		},
 		{
-			"match": "\\b(and|or|not|typeid|new|gcnew|local|global)\\b(?![?!])",
+			"match": "\\b(and|or|not|is|typeid|new|gcnew|local|global)\\b(?![?!])",
 			"name": "keyword.other.special-method.covscript"
 		},
 		{
