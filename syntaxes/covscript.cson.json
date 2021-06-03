@@ -1,10 +1,11 @@
 {
-	"version": "1.0.0",
+	"version": "1.0.5",
 	"name": "CovScript",
 	"scopeName": "source.covscript",
 	"fileTypes": [
 		"csc",
-		"csp"
+		"csp",
+		"ecs"
 	],
 	"firstLineMatch": "^#!\\s*/.*(?:covscript|cs)\\b",
 	"patterns": [
@@ -312,12 +313,15 @@
 			]
 		},
 		{
-			"begin": "\\[[\\w=,\\s]*\\]\\s*\\(",
-			"end": "\\)\\s*(->|\\{)",
+			"begin": "(?=\\[[\\w=,\\s]*\\]\\s*\\()",
+			"end": "(?=(->|\\{))",
 			"name": "meta.lambda_expression.covscript",
 			"patterns": [
 				{
 					"include": "#args_list"
+				},
+				{
+					"include": "$self"
 				}
 			]
 		},
