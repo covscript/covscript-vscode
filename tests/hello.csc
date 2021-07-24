@@ -14,6 +14,9 @@ system.out.println("aaa")
 var a = "sss"
 link a = "xxx"
 
+var ch = '\''
+var str = "\""
+
 class ClassName extends sss
     function initialize()
     end

@@ -254,6 +254,10 @@
 			"name": "string.quoted.single.covscript",
 			"patterns": [
 				{
+					"match": "\\\\'|\\\\\\\\",
+					"name": "constant.character.escape.covscript"
+				},
+				{
 					"include": "#escaped_char"
 				}
 			]
