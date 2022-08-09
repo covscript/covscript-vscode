@@ -10,6 +10,8 @@ function fuck(item)
     @end
 end
 
+var (x, y, z) = test()
+
 system.out.println("aaa")
 var a = "sss"
 link a = "xxx"
