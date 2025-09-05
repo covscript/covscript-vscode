@@ -1,6 +1,13 @@
 .vscode/**
 .vscode-test/**
 .gitignore
-vsc-extension-quickstart.md
 .DS_Store
-
+node_modules
+package-lock.json
+out/test
+src
+**/*.map
+**/*.ts
+**/.vscode-test.*
+tests/
+.ecs_output/

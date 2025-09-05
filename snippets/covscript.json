@@ -6,6 +6,13 @@
 		],
 		"description": "Print to standard output"
 	},
+	"getline": {
+		"prefix": "getl",
+		"body": [
+			"system.in.getline()"
+		],
+		"description": "Get line from standard input"
+	},
 	"import": {
 		"prefix": "import",
 		"body": [

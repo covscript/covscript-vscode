@@ -1,6 +1,8 @@
 .DS_Store
 .vscode/**
 .vscode-test/**
-vsc-extension-quickstart.md
 *.vsix
-
+node_modules
+package-lock.json
+out/
+.ecs_output/

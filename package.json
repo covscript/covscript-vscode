@@ -2,7 +2,7 @@
     "name": "covscript",
     "displayName": "Covariant Script",
     "description": "Covariant Script 3/4 language support for VSCode",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "publisher": "mikecovlee",
     "repository": {
         "type": "git",
@@ -18,7 +18,7 @@
     "contributors": [],
     "license": "MIT",
     "engines": {
-        "vscode": "^1.75.0"
+        "vscode": "^1.100.0"
     },
     "categories": [
         "Programming Languages",
@@ -30,6 +30,8 @@
         "language",
         "syntax highlighting"
     ],
+    "activationEvents": [],
+    "main": "./out/extension.js",
     "contributes": {
         "snippets": [
             {
@@ -60,6 +62,83 @@
                 "scopeName": "source.covscript",
                 "path": "./syntaxes/covscript.cson.json"
             }
+        ],
+        "menus": {
+            "editor/title": [
+                {
+                    "command": "covscript.runFile",
+                    "when": "editorLangId == covscript",
+                    "group": "navigation@1"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "covscript.runFile",
+                "title": "Run CovScript File",
+                "icon": "$(play)"
+            }
+        ],
+        "configuration": {
+            "type": "object",
+            "title": "CovScript Extension Settings",
+            "properties": {
+                "covscript.runner.csPath": {
+                    "type": "string",
+                    "default": "cs",
+                    "description": "Path to CovScript interpreter executable"
+                },
+                "covscript.runner.csArgs": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Additional arguments to pass to CovScript interpreter"
+                },
+                "covscript.runner.ecsPath": {
+                    "type": "string",
+                    "default": "ecs",
+                    "description": "Path to Extended CovScript interpreter executable"
+                },
+                "covscript.runner.ecsArgs": {
+                    "type": "string",
+                    "default": "",
+                    "description": "Additional arguments to pass to Extended CovScript interpreter"
+                },
+                "covscript.defaultRunner": {
+                    "type": "string",
+                    "enum": [
+                        "cs",
+                        "ecs"
+                    ],
+                    "enumDescriptions": [
+                        "CovScript",
+                        "Extended CovScript"
+                    ],
+                    "default": "ecs",
+                    "description": "Default runner for unsaved files or unknown file types."
+                }
+            }
+        },
+        "keybindings": [
+            {
+                "command": "covscript.runFile",
+                "when": "editorTextFocus",
+                "mac": "cmd+r",
+                "win": "ctrl+r",
+                "linux": "ctrl+r"
+            }
         ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile"
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.100.0",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "22.x",
+        "eslint": "^9.32.0",
+        "typescript": "^5.9.2"
     }
 }

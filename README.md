@@ -3,8 +3,7 @@
 
 Website: covscript.org.cn
 
-Mail: dev@covariant.cn
-
 ## Features
 * Syntax highlighting
 * Code snippets
+* Code run
