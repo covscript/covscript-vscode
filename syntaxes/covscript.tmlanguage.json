@@ -1,0 +1,149 @@
+{
+	"version": "1.1.0",
+	"name": "CovScript",
+	"scopeName": "source.covscript",
+	"fileTypes": [
+		"csc",
+		"csp",
+		"ecs",
+		"ecsx"
+	],
+	"firstLineMatch": "^#!.*\\b(covscript|cs)\\b",
+	"patterns": [
+		{
+			"match": "#.*$",
+			"name": "comment.line.number-sign.covscript"
+		},
+		{
+			"match": "@[A-Za-z_]\\w*(:\\s*\\w+)?",
+			"name": "entity.name.tag.preprocessor.covscript"
+		},
+		{
+			"match": "\\b(package|import|var|constant|link|function|class|struct|namespace|using)\\b",
+			"name": "keyword.control.covscript"
+		},
+		{
+			"match": "\\b(if|else|else\\s+if|switch|case|default|while|until|for|foreach|loop|break|continue|return|throw|try|catch|end|block)\\b",
+			"name": "keyword.control.flow.covscript"
+		},
+		{
+			"match": "\\b(true|false|null)\\b",
+			"name": "constant.language.covscript"
+		},
+		{
+			"match": "\\b(this|self)\\b",
+			"name": "variable.language.self.covscript"
+		},
+		{
+			"match": "\\b(and|or|not|as|is|typeid|new|gcnew|local|global)\\b",
+			"name": "keyword.operator.special.covscript"
+		},
+		{
+			"match": "\\b[0-9]+(\\.[0-9]+)?\\b",
+			"name": "constant.numeric.covscript"
+		},
+		{
+			"begin": "\"",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "(?<!\\\\)(?:\\\\\\\\)*\"",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.double.covscript",
+			"patterns": [
+				{
+					"match": "\\\\(a|b|f|n|r|t|v|\\'|\"|0)",
+					"name": "constant.character.escape.covscript"
+				}
+			]
+		},
+		{
+			"begin": "'",
+			"beginCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.begin.covscript"
+				}
+			},
+			"end": "(?<!\\\\)(?:\\\\\\\\)*'",
+			"endCaptures": {
+				"0": {
+					"name": "punctuation.definition.string.end.covscript"
+				}
+			},
+			"name": "string.quoted.single.covscript",
+			"patterns": [
+				{
+					"match": "\\\\(a|b|f|n|r|t|v|\\'|\"|0)",
+					"name": "constant.character.escape.covscript"
+				}
+			]
+		},
+		{
+			"match": "[A-Za-z_]\\w*",
+			"name": "variable.other.covscript"
+		},
+		{
+			"match": "\\(|\\)|\\{|\\}|\\[|\\]|,|;|\\.|->",
+			"name": "punctuation.separator.covscript"
+		},
+		{
+			"match": "\\+\\+|--|\\+|\\-|\\*|/|%|\\^|==|!=|>=|<=|>|<|&&|\\|\\||=>|:=|\\+=|-=|\\*=|/=|%=",
+			"name": "keyword.operator.arithmetic.covscript"
+		},
+		{
+			"begin": "\\[",
+			"end": "\\]",
+			"name": "meta.lambda-expression.covscript",
+			"patterns": [
+				{
+					"match": "[A-Za-z_]\\w*",
+					"name": "variable.other.lambda.covscript"
+				},
+				{
+					"match": "=",
+					"name": "keyword.operator.capture.covscript"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.covscript"
+				}
+			]
+		},
+		{
+			"begin": "\\(",
+			"end": "\\)",
+			"name": "meta.function-call.covscript",
+			"patterns": [
+				{
+					"match": "[A-Za-z_]\\w*",
+					"name": "entity.name.function.covscript"
+				},
+				{
+					"match": ",",
+					"name": "punctuation.separator.covscript"
+				}
+			]
+		},
+		{
+			"begin": "{",
+			"end": "}",
+			"name": "meta.block.covscript",
+			"patterns": [
+				{
+					"include": "$self"
+				}
+			]
+		},
+		{
+			"match": "\\.\\.\\.|\\.\\.|\\.|::",
+			"name": "punctuation.access.covscript"
+		}
+	],
+	"repository": {}
+}

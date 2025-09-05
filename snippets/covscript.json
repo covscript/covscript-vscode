@@ -1,57 +1,59 @@
 {
-	"println": {
+	"Println": {
 		"prefix": "sout",
 		"body": [
 			"system.out.println($0)"
 		],
 		"description": "Print to standard output"
 	},
-	"getline": {
+	"Get line": {
 		"prefix": "getl",
 		"body": [
 			"system.in.getline()"
 		],
 		"description": "Get line from standard input"
 	},
-	"import": {
+	"Import module": {
 		"prefix": "import",
 		"body": [
 			"import $0"
 		],
 		"description": "Import a module"
 	},
-	"package": {
+	"Package definition": {
 		"prefix": "package",
 		"body": [
 			"package $0"
 		],
 		"description": "Define a package"
 	},
-	"using": {
+	"Using alias": {
 		"prefix": "using",
 		"body": [
 			"using $0"
 		],
 		"description": "Using alias"
 	},
-	"try-catch": {
+	"Try-catch": {
 		"prefix": "try",
 		"body": [
 			"try",
 			"\t$1",
-			"catch ${2:except}",
+			"catch ${2:exception1}",
 			"\t$3",
+			"catch ${4:exception2}",
+			"\t$5",
 			"end"
 		],
 		"description": "Try-catch block"
 	},
-	"class/struct definition": {
+	"Class or Struct": {
 		"prefix": [
 			"class",
 			"struct"
 		],
 		"body": [
-			"class ${1:ClassName}",
+			"${1:classOrStruct} ${2:Name}",
 			"\tfunction initialize()",
 			"\t\t$0",
 			"\tend",
@@ -59,41 +61,39 @@
 		],
 		"description": "Class or struct definition"
 	},
-	"namespace definition": {
+	"Namespace": {
 		"prefix": "namespace",
 		"body": [
-			"namespace ${1:NameSpaceName}",
+			"namespace ${1:Name}",
 			"\t$0",
 			"end"
 		],
 		"description": "Namespace definition"
 	},
-	"for enumerable": {
+	"Foreach loop": {
 		"prefix": "forin",
 		"body": [
-			"foreach ${1:value} in ${2:enumerable}",
+			"foreach ${1:var} in ${2:collection}",
 			"\t$0",
 			"end"
 		],
 		"description": "Foreach loop over enumerable"
 	},
-	"for range": {
-		"prefix": "forrange",
+	"Foreach loop inline": {
+		"prefix": "forinlin",
 		"body": [
-			"foreach ${1:i} in range(${2:n})",
-			"\t$0",
-			"end"
+			"foreach ${1:var} in ${2:collection} do ${0}"
 		],
-		"description": "Foreach loop over range"
+		"description": "Single-line foreach loop"
 	},
-	"for range do": {
+	"For range inline": {
 		"prefix": "fordo",
 		"body": [
-			"foreach ${1:i} in range(${2:n}) do $0"
+			"for ${1:init}; ${2:cond}; ${3:step} do ${0}"
 		],
-		"description": "Single-line foreach loop with range"
+		"description": "Single-line for loop"
 	},
-	"if": {
+	"If": {
 		"prefix": "if",
 		"body": [
 			"if ${1:test}",
@@ -102,7 +102,7 @@
 		],
 		"description": "If statement"
 	},
-	"if else": {
+	"If else": {
 		"prefix": "ifelse",
 		"body": [
 			"if ${1:test}",
@@ -113,7 +113,7 @@
 		],
 		"description": "If-else statement"
 	},
-	"switch": {
+	"Switch": {
 		"prefix": "switch",
 		"body": [
 			"switch ${1:test}",
@@ -122,7 +122,7 @@
 		],
 		"description": "Switch statement"
 	},
-	"case": {
+	"Case": {
 		"prefix": "case",
 		"body": [
 			"case ${1:constant}",
@@ -131,7 +131,7 @@
 		],
 		"description": "Case branch in switch"
 	},
-	"default": {
+	"Default": {
 		"prefix": "default",
 		"body": [
 			"default",
@@ -140,7 +140,7 @@
 		],
 		"description": "Default branch in switch"
 	},
-	"forever loop": {
+	"Loop forever": {
 		"prefix": "loop",
 		"body": [
 			"loop",
@@ -149,7 +149,7 @@
 		],
 		"description": "Infinite loop"
 	},
-	"until loop": {
+	"Loop until": {
 		"prefix": "loopuntil",
 		"body": [
 			"loop",
@@ -158,7 +158,7 @@
 		],
 		"description": "Loop until condition is true"
 	},
-	"while loop": {
+	"While loop": {
 		"prefix": "while",
 		"body": [
 			"while ${1:test}",
@@ -167,13 +167,71 @@
 		],
 		"description": "While loop"
 	},
-	"function definition": {
+	"Function": {
 		"prefix": "function",
 		"body": [
-			"function ${1:functionName}(${2:params})",
+			"function ${1:name}(${2:params})",
 			"\t$0",
 			"end"
 		],
 		"description": "Function definition"
+	},
+	"Lambda expression": {
+		"prefix": "lambda",
+		"body": [
+			"[${1:captures}](${2:args}) {",
+			"\t$0",
+			"}"
+		],
+		"description": "Lambda / anonymous function"
+	},
+	"Array literal": {
+		"prefix": "arr",
+		"body": [
+			"{ ${1:elements} }"
+		],
+		"description": "Array literal"
+	},
+	"Hash literal": {
+		"prefix": "hash",
+		"body": [
+			"{ ${1:key}: ${2:value}, ${3:key2}: ${4:value2} }"
+		],
+		"description": "Hash literal"
+	},
+	"Struct binding": {
+		"prefix": "bind",
+		"body": [
+			"(${1:vars}) = ${2:expr}"
+		],
+		"description": "Structured binding / destructuring assignment"
+	},
+	"Break": {
+		"prefix": "break",
+		"body": [
+			"break"
+		],
+		"description": "Break from loop"
+	},
+	"Continue": {
+		"prefix": "continue",
+		"body": [
+			"continue"
+		],
+		"description": "Continue loop"
+	},
+	"Return": {
+		"prefix": "return",
+		"body": [
+			"return ${1:expr}"
+		],
+		"description": "Return from function"
+	},
+	"Throw": {
+		"prefix": "throw",
+		"body": [
+			"throw ${1:expr}"
+		],
+		"description": "Throw exception"
 	}
 }
