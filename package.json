@@ -2,7 +2,7 @@
     "name": "covscript",
     "displayName": "Covariant Script",
     "description": "Covariant Script 3/4 language support for VSCode",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "publisher": "mikecovlee",
     "repository": {
         "type": "git",
@@ -53,7 +53,11 @@
                     ".ecsx"
                 ],
                 "firstLine": "^#!.*\\b(covscript|cs)\\b",
-                "configuration": "./language-configuration.json"
+                "configuration": "./language-configuration.json",
+                "icon": {
+                    "light": "./covscript.png",
+                    "dark": "./covscript.png"
+                }
             }
         ],
         "grammars": [
