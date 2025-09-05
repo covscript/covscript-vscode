@@ -1,9 +1,7 @@
 {
     "comments": {
-        // symbol used for single line comment. Remove this entry if your language does not support line comments
         "lineComment": "#"
     },
-    // symbols used as brackets
     "brackets": [
         [
             "{",
@@ -18,7 +16,6 @@
             ")"
         ]
     ],
-    // symbols that are auto closed when typing
     "autoClosingPairs": [
         {
             "open": "{",
@@ -49,7 +46,6 @@
             ]
         }
     ],
-    // symbols that that can be used to surround a selection
     "surroundingPairs": [
         [
             "{",
@@ -74,8 +70,8 @@
     ],
     "wordPattern": "([A-Za-z_]\\w*)",
     "indentationRules": {
-        "increaseIndentPattern": "^\\s*(block|namespace|if|else|switch|case|default|while|loop|for|foreach|try|catch|function|class|struct)(\\s*|\\s+.*)$",
+        "increaseIndentPattern": "^\\s*(block|namespace|if|else|switch|case|default|while|loop|for|foreach|try|catch|function|class|struct)\\b.*$",
         "unIndentedLinePattern": "\\bdo\\b",
-        "decreaseIndentPattern": "^\\s*(else|catch|until|end)\\s*$"
-    }
+        "decreaseIndentPattern": "^\\s*(else|catch|until|end)\\b.*$"
+    },
 }

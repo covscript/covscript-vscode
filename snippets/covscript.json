@@ -3,35 +3,40 @@
 		"prefix": "sout",
 		"body": [
 			"system.out.println($0)"
-		]
+		],
+		"description": "Print to standard output"
 	},
 	"import": {
 		"prefix": "import",
 		"body": [
 			"import $0"
-		]
+		],
+		"description": "Import a module"
 	},
 	"package": {
 		"prefix": "package",
 		"body": [
 			"package $0"
-		]
+		],
+		"description": "Define a package"
 	},
 	"using": {
 		"prefix": "using",
 		"body": [
 			"using $0"
-		]
+		],
+		"description": "Using alias"
 	},
 	"try-catch": {
 		"prefix": "try",
 		"body": [
 			"try",
 			"\t$1",
-			"catch except",
-			"\t$2",
+			"catch ${2:except}",
+			"\t$3",
 			"end"
-		]
+		],
+		"description": "Try-catch block"
 	},
 	"class/struct definition": {
 		"prefix": [
@@ -44,7 +49,8 @@
 			"\t\t$0",
 			"\tend",
 			"end"
-		]
+		],
+		"description": "Class or struct definition"
 	},
 	"namespace definition": {
 		"prefix": "namespace",
@@ -52,38 +58,33 @@
 			"namespace ${1:NameSpaceName}",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "Namespace definition"
 	},
 	"for enumerable": {
-		"prefix": [
-			"foreach",
-			"for"
-		],
+		"prefix": "forin",
 		"body": [
 			"foreach ${1:value} in ${2:enumerable}",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "Foreach loop over enumerable"
 	},
 	"for range": {
-		"prefix": [
-			"foreach",
-			"for"
-		],
+		"prefix": "forrange",
 		"body": [
-			"foreach ${1:i} in range($2)",
+			"foreach ${1:i} in range(${2:n})",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "Foreach loop over range"
 	},
 	"for range do": {
-		"prefix": [
-			"foreachdo",
-			"fordo"
-		],
+		"prefix": "fordo",
 		"body": [
-			"foreach ${1:i} in range($2) do $0"
-		]
+			"foreach ${1:i} in range(${2:n}) do $0"
+		],
+		"description": "Single-line foreach loop with range"
 	},
 	"if": {
 		"prefix": "if",
@@ -91,17 +92,19 @@
 			"if ${1:test}",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "If statement"
 	},
 	"if else": {
 		"prefix": "ifelse",
 		"body": [
 			"if ${1:test}",
-			"\t$0",
+			"\t$2",
 			"else",
-			"\t",
+			"\t$0",
 			"end"
-		]
+		],
+		"description": "If-else statement"
 	},
 	"switch": {
 		"prefix": "switch",
@@ -109,7 +112,8 @@
 			"switch ${1:test}",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "Switch statement"
 	},
 	"case": {
 		"prefix": "case",
@@ -117,7 +121,8 @@
 			"case ${1:constant}",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "Case branch in switch"
 	},
 	"default": {
 		"prefix": "default",
@@ -125,7 +130,8 @@
 			"default",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "Default branch in switch"
 	},
 	"forever loop": {
 		"prefix": "loop",
@@ -133,7 +139,8 @@
 			"loop",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "Infinite loop"
 	},
 	"until loop": {
 		"prefix": "loopuntil",
@@ -141,7 +148,8 @@
 			"loop",
 			"\t$0",
 			"until ${1:test}"
-		]
+		],
+		"description": "Loop until condition is true"
 	},
 	"while loop": {
 		"prefix": "while",
@@ -149,14 +157,16 @@
 			"while ${1:test}",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "While loop"
 	},
 	"function definition": {
 		"prefix": "function",
 		"body": [
-			"function ${1:functionName}($2)",
+			"function ${1:functionName}(${2:params})",
 			"\t$0",
 			"end"
-		]
+		],
+		"description": "Function definition"
 	}
 }

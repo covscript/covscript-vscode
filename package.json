@@ -1,8 +1,8 @@
 {
     "name": "covscript",
     "displayName": "Covariant Script",
-    "description": "The CovScript 3/4 language support for VSCode",
-    "version": "1.0.8",
+    "description": "Covariant Script 3/4 language support for VSCode",
+    "version": "1.1.0",
     "publisher": "mikecovlee",
     "repository": {
         "type": "git",
@@ -18,10 +18,17 @@
     "contributors": [],
     "license": "MIT",
     "engines": {
-        "vscode": "^1.70.0"
+        "vscode": "^1.75.0"
     },
     "categories": [
-        "Programming Languages"
+        "Programming Languages",
+        "Snippets"
+    ],
+    "keywords": [
+        "covscript",
+        "cs",
+        "language",
+        "syntax highlighting"
     ],
     "contributes": {
         "snippets": [
@@ -43,8 +50,7 @@
                     ".ecs",
                     ".ecsx"
                 ],
-                "firstLine": "^#!\\s*/.*(?:covscript|cs)\\b",
-                "filenames": [],
+                "firstLine": "^#!.*\\b(covscript|cs)\\b",
                 "configuration": "./language-configuration.json"
             }
         ],

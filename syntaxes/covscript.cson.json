@@ -7,16 +7,16 @@
 		"csp",
 		"ecs"
 	],
-	"firstLineMatch": "^#!\\s*/.*(?:covscript|cs)\\b",
+	"firstLineMatch": "^#!.*\\b(covscript|cs)\\b",
 	"patterns": [
 		{
-			"begin": "(?x)\n^\\s*(import)\\s+",
+			"begin": "^\\s*(import)\\s+",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.import.covscript"
 				}
 			},
-			"end": "(;|$)",
+			"end": "(?=;|$)",
 			"name": "meta.import.covscript",
 			"patterns": [
 				{
@@ -48,17 +48,17 @@
 					"name": "entity.name.type.package.covscript"
 				}
 			},
-			"match": "(?x)\n^\\s*(package)\\s+([A-Za-z_]\\w*)\\s*$",
+			"match": "^\\s*(package)\\s+([A-Za-z_]\\w*)\\s*$",
 			"name": "meta.package.covscript"
 		},
 		{
-			"begin": "(?x)\n^\\s*(var|constant|link)\\b(?![?!])",
+			"begin": "^\\s*(var|constant|link)\\b(?![?!])",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.var.covscript"
 				}
 			},
-			"end": "(;|$)",
+			"end": "(?=;|$)",
 			"name": "meta.var.covscript",
 			"patterns": [
 				{
@@ -73,13 +73,13 @@
 			]
 		},
 		{
-			"begin": "(?x)\n^\\s*(using|namespace|if|else\\s+if|switch|case|while|until|return|throw|catch)\\b(?![?!])",
+			"begin": "^\\s*(using|namespace|if|else\\s+if|switch|case|while|until|return|throw|catch)\\b(?![?!])",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.other.covscript"
 				}
 			},
-			"end": "(;|$)",
+			"end": "(?=;|$)",
 			"name": "meta.control_stmts.covscript",
 			"patterns": [
 				{
@@ -88,7 +88,7 @@
 			]
 		},
 		{
-			"begin": "(?x)\n^\\s*(for)\\s+([A-Za-z_]\\w*)\\s*=",
+			"begin": "^\\s*(for)\\s+([A-Za-z_]\\w*)\\s*=",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.for.covscript"
@@ -97,7 +97,7 @@
 					"name": "variable.other.covscript"
 				}
 			},
-			"end": "(;|$)",
+			"end": "(?=;|$)",
 			"name": "meta.for.covscript",
 			"patterns": [
 				{
@@ -110,7 +110,7 @@
 			]
 		},
 		{
-			"begin": "(?x)\n^\\s*(foreach)\\s+([A-Za-z_]\\w*)\\s+(in)\\s+",
+			"begin": "^\\s*(foreach)\\s+([A-Za-z_]\\w*)\\s+(in)\\s+",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.foreach.covscript"
@@ -122,7 +122,7 @@
 					"name": "keyword.control.in.covscript"
 				}
 			},
-			"end": "(;|$)",
+			"end": "(?=;|$)",
 			"name": "meta.foreach.covscript",
 			"patterns": [
 				{
@@ -135,7 +135,7 @@
 			]
 		},
 		{
-			"begin": "(?x)\n^\\s*(function)\\s+([A-Za-z_]\\w*)\\s*\\(",
+			"begin": "^\\s*(function)\\s+([A-Za-z_]\\w*)\\s*\\(",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.function.covscript"
@@ -158,7 +158,7 @@
 			]
 		},
 		{
-			"begin": "(?x)\n^\\s*(class|struct)\\s+([A-Za-z_]\\w*)\\s+(extends)\\s+",
+			"begin": "^\\s*(class|struct)\\s+([A-Za-z_]\\w*)\\s+(extends)\\s+",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.class.covscript"
@@ -170,7 +170,7 @@
 					"name": "keyword.control.extends.covscript"
 				}
 			},
-			"end": "(;|$)",
+			"end": "(?=;|$)",
 			"name": "meta.class_extends.covscript",
 			"patterns": [
 				{
@@ -190,7 +190,7 @@
 					"name": "keyword.control.extends.covscript"
 				}
 			},
-			"match": "(?x)\n^\\s*(class|struct)\\s+([A-Za-z_]\\w*)\\s*$",
+			"match": "^\\s*(class|struct)\\s+([A-Za-z_]\\w*)\\s*$",
 			"name": "meta.class.covscript"
 		},
 		{
@@ -210,7 +210,7 @@
 			"name": "keyword.other.special-method.covscript"
 		},
 		{
-			"match": "(?x)\n^\\s*(block|else|default|loop|break|continue|try|end)\\s*$",
+			"match": "^\\s*(block|else|default|loop|break|continue|try|end)\\s*$",
 			"name": "keyword.control.reserved.covscript"
 		},
 		{
@@ -222,7 +222,7 @@
 					"name": "variable.other.covscript"
 				}
 			},
-			"match": "(?x)\n^\\s*(@[A-Za-z_]\\w*)\\s*(:\\s*\\w+\\s*)?$",
+			"match": "^\\s*(@[A-Za-z_]\\w*)\\s*(:\\s*\\w+\\s*)?$",
 			"name": "meta.preprocessor.covscript"
 		},
 		{
@@ -231,7 +231,7 @@
 			"name": "comment.line.number-sign"
 		},
 		{
-			"match": "\\b[0-9]+(.[0-9]+)?\\b(?![?!])",
+			"match": "\\b[0-9]+(\\.[0-9]+)?\\b(?![?!])",
 			"name": "constant.numeric"
 		},
 		{
@@ -245,7 +245,7 @@
 					"name": "punctuation.definition.string.begin.covscript"
 				}
 			},
-			"end": "'",
+			"end": "(?<!\\\\)(?:\\\\\\\\)*'",
 			"endCaptures": {
 				"0": {
 					"name": "punctuation.definition.string.end.covscript"
@@ -254,11 +254,8 @@
 			"name": "string.quoted.single.covscript",
 			"patterns": [
 				{
-					"match": "\\\\'|\\\\\\\\",
+					"match": "\\\\(a|b|f|n|r|t|v|\\|'|\"|0)",
 					"name": "constant.character.escape.covscript"
-				},
-				{
-					"include": "#escaped_char"
 				}
 			]
 		},
@@ -269,7 +266,7 @@
 					"name": "punctuation.definition.string.begin.covscript"
 				}
 			},
-			"end": "\"",
+			"end": "(?<!\\\\)(?:\\\\\\\\)*\"",
 			"endCaptures": {
 				"0": {
 					"name": "punctuation.definition.string.end.covscript"
@@ -278,7 +275,8 @@
 			"name": "string.quoted.double.covscript",
 			"patterns": [
 				{
-					"include": "#escaped_char"
+					"match": "\\\\(a|b|f|n|r|t|v|\\|'|\"|0)",
+					"name": "constant.character.escape.covscript"
 				}
 			]
 		},
@@ -339,17 +337,13 @@
 		}
 	],
 	"repository": {
-		"escaped_char": {
-			"match": "\\\\(a|b|f|n|r|t|v|\\|'|\"|0)",
-			"name": "constant.character.escape.covscript"
-		},
 		"args_list": {
 			"captures": {
 				"1": {
 					"name": "variable.other.covscript"
 				}
 			},
-			"match": "([A-za-z_]\\w*)\\s*,?",
+			"match": "([A-Za-z_]\\w*)\\s*,?",
 			"name": "meta.args_list.covscript"
 		},
 		"comma_list": {
@@ -358,7 +352,7 @@
 					"name": "entity.name.type.package.covscript"
 				}
 			},
-			"match": "([A-za-z_]\\w*)\\s*,?",
+			"match": "([A-Za-z_]\\w*)\\s*,?",
 			"name": "meta.comma_list.covscript"
 		},
 		"variable_definition": {
@@ -367,7 +361,7 @@
 					"name": "variable.other.covscript"
 				}
 			},
-			"match": "([A-za-z_]\\w*)\\s*(?=(=|\\s+as\\s+))",
+			"match": "([A-Za-z_]\\w*)\\s*(?=(=|\\s+as\\s+))",
 			"name": "meta.vardef.covscript"
 		},
 		"structured_binding": {
@@ -376,7 +370,7 @@
 			"name": "meta.structured_binding.covscript",
 			"patterns": [
 				{
-					"match": "[A-za-z_]\\w*",
+					"match": "[A-Za-z_]\\w*",
 					"name": "variable.other.covscript"
 				}
 			]
